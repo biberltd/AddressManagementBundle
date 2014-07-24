@@ -1,0 +1,4 @@
+services:
+    addressmanagement.model:
+            class:        BiberLtd\Core\Bundles\AddressManagementBundle\Services\AddressManagementModel
+            arguments:    [@kernel, "default", "doctrine"]
