@@ -1,5 +1,5 @@
 <?php
-namespace BiberLtd\Core\Bundles\AddressManagementBundle\Entity;
+namespace BiberLtd\Bundle\AddressManagementBundle\Entity;
 use BiberLtd\Core\CoreLocalizableEntity;
 use Doctrine\ORM\Mapping AS ORM;
 
@@ -50,7 +50,7 @@ class AddressType extends CoreLocalizableEntity
 
     /**
      * @ORM\OneToMany(
-     *     targetEntity="BiberLtd\Core\Bundles\AddressManagementBundle\Entity\AddressTypeLocalization",
+     *     targetEntity="BiberLtd\Bundle\AddressManagementBundle\Entity\AddressTypeLocalization",
      *     mappedBy="address_type"
      * )
      */

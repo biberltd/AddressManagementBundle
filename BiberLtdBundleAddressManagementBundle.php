@@ -1,11 +1,11 @@
 <?php
 
-namespace BiberLtd\Core\Bundles\AddressManagementBundle;
+namespace BiberLtd\Bundle\AddressManagementBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class BiberLtdCoreBundlesAddressManagementBundle extends Bundle
+class BiberLtdBundleAddressManagementBundle extends Bundle
 {
 
 }

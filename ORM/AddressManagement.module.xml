@@ -203,7 +203,7 @@
     </association>
     <comment caption="AddressManagementBundle Pricing" description="address: 240 TL&#10;addresses_of_member: 130 TL&#10;address_type: &#10;&#10;toplam: 370 TL" uuid="38d0920e-bcf9-4c76-95bd-b8e7e19afc8c"/>
     <orm-attributes>
-      <attribute name="namespace">BiberLtd\Core\Bundles\AddressManagementBundle\Entity</attribute>
+      <attribute name="namespace">BiberLtd\Bundle\AddressManagementBundle\Entity</attribute>
       <attribute name="filename-format">entity-name-only</attribute>
       <attribute name="file-suffix">without-suffix</attribute>
     </orm-attributes>

@@ -15,7 +15,7 @@
  *
  */
 
-namespace BiberLtd\Core\Bundles\AddressManagementBundle\Entity;
+namespace BiberLtd\Bundle\AddressManagementBundle\Entity;
 use Doctrine\ORM\Mapping AS ORM;
 use BiberLtd\Core\CoreEntity;
 /** 
@@ -65,7 +65,7 @@ class Address extends CoreEntity
 
     /**
      * @ORM\OneToMany(
-     *     targetEntity="BiberLtd\Core\Bundles\AddressManagementBundle\Entity\PhoneNumbersOfAddresses",
+     *     targetEntity="BiberLtd\Bundle\AddressManagementBundle\Entity\PhoneNumbersOfAddresses",
      *     mappedBy="address"
      * )
      */
@@ -87,25 +87,25 @@ class Address extends CoreEntity
     private $nr;
 
     /** 
-     * @ORM\ManyToOne(targetEntity="BiberLtd\Core\Bundles\LocationManagementBundle\Entity\Country")
+     * @ORM\ManyToOne(targetEntity="BiberLtd\Bundle\LocationManagementBundle\Entity\Country")
      * @ORM\JoinColumn(name="country", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
     private $country;
 
     /** 
-     * @ORM\ManyToOne(targetEntity="BiberLtd\Core\Bundles\LocationManagementBundle\Entity\City")
+     * @ORM\ManyToOne(targetEntity="BiberLtd\Bundle\LocationManagementBundle\Entity\City")
      * @ORM\JoinColumn(name="city", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
     private $city;
 
     /** 
-     * @ORM\ManyToOne(targetEntity="BiberLtd\Core\Bundles\LocationManagementBundle\Entity\State")
+     * @ORM\ManyToOne(targetEntity="BiberLtd\Bundle\LocationManagementBundle\Entity\State")
      * @ORM\JoinColumn(name="state", referencedColumnName="id", onDelete="CASCADE")
      */
     private $state;
 
     /** 
-     * @ORM\ManyToOne(targetEntity="BiberLtd\Core\Bundles\SiteManagementBundle\Entity\Site")
+     * @ORM\ManyToOne(targetEntity="BiberLtd\Bundle\SiteManagementBundle\Entity\Site")
      * @ORM\JoinColumn(name="site", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
     private $site;
@@ -235,7 +235,7 @@ class Address extends CoreEntity
      * @since           1.0.0
      * @version         1.0.0
      *
-     * @param           BiberLtd\Core\Bundles\LocationManagementBundle\Entity\Country           $country
+     * @param           BiberLtd\Bundle\LocationManagementBundle\Entity\Country           $country
      *
      * @return          object          $this
      */
@@ -255,7 +255,7 @@ class Address extends CoreEntity
      * @since           1.0.0
      * @version         1.0.0
      *
-     * @return          BiberLtd\Core\Bundles\LocationManagementBundle\Entity\Country           $this->country
+     * @return          BiberLtd\Bundle\LocationManagementBundle\Entity\Country           $this->country
      */
     public function getCountry(){
         return $this->country;
@@ -268,7 +268,7 @@ class Address extends CoreEntity
      * @since           1.0.0
      * @version         1.0.0
      *
-     * @param           BiberLtd\Core\Bundles\LocationManagementBundle\Entity\City          $city
+     * @param           BiberLtd\Bundle\LocationManagementBundle\Entity\City          $city
      *
      * @return          object          $this
      */
@@ -288,7 +288,7 @@ class Address extends CoreEntity
      * @since           1.0.0
      * @version         1.0.0
      *
-     * @return          BiberLtd\Core\Bundles\LocationManagementBundle\Entity\City          $this->city
+     * @return          BiberLtd\Bundle\LocationManagementBundle\Entity\City          $this->city
      */
     public function getCity(){
         return $this->city;
@@ -301,7 +301,7 @@ class Address extends CoreEntity
      * @since           1.0.0
      * @version         1.0.0
      *
-     * @param           BiberLtd\Core\Bundles\LocationManagementBundle\Entity\State          $state
+     * @param           BiberLtd\Bundle\LocationManagementBundle\Entity\State          $state
      *
      * @return          object          $this
      */
@@ -321,7 +321,7 @@ class Address extends CoreEntity
      * @since           1.0.0
      * @version         1.0.0
      *
-     * @return          BiberLtd\Core\Bundles\LocationManagementBundle\Entity\State          $this->state
+     * @return          BiberLtd\Bundle\LocationManagementBundle\Entity\State          $this->state
      */
     public function getState(){
         return $this->state;

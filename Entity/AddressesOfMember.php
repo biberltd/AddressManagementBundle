@@ -1,5 +1,5 @@
 <?php
-namespace BiberLtd\Core\Bundles\AddressManagementBundle\Entity;
+namespace BiberLtd\Bundle\AddressManagementBundle\Entity;
 use BiberLtd\Core\CoreEntity;
 use Doctrine\ORM\Mapping AS ORM;
 
@@ -45,20 +45,20 @@ class AddressesOfMember extends CoreEntity
 
     /** 
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="BiberLtd\Core\Bundles\AddressManagementBundle\Entity\Address")
+     * @ORM\ManyToOne(targetEntity="BiberLtd\Bundle\AddressManagementBundle\Entity\Address")
      * @ORM\JoinColumn(name="address", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
     private $address;
 
     /** 
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="BiberLtd\Core\Bundles\MemberManagementBundle\Entity\Member")
+     * @ORM\ManyToOne(targetEntity="BiberLtd\Bundle\MemberManagementBundle\Entity\Member")
      * @ORM\JoinColumn(name="member", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
     private $member;
 
     /**
-     * @ORM\ManyToOne(targetEntity="BiberLtd\Core\Bundles\AddressManagementBundle\Entity\AddressType")
+     * @ORM\ManyToOne(targetEntity="BiberLtd\Bundle\AddressManagementBundle\Entity\AddressType")
      * @ORM\JoinColumn(name="type", referencedColumnName="id", nullable=false)
      */
     private $address_type;
@@ -81,7 +81,7 @@ class AddressesOfMember extends CoreEntity
      *
      * @use             $this->setModified()
      *
-     * @param           BiberLtd\Core\Bundles\AddressManagementBundle\Entity\Address $address
+     * @param           BiberLtd\Bundle\AddressManagementBundle\Entity\Address $address
      *
      * @return          object                $this
      */
@@ -102,7 +102,7 @@ class AddressesOfMember extends CoreEntity
      * @since           1.0.0
      * @version         1.0.0
      *
-     * @return          BiberLtd\Core\Bundles\AddressManagementBundle\Entity\Address           $this->address
+     * @return          BiberLtd\Bundle\AddressManagementBundle\Entity\Address           $this->address
      */
     public function getAddress() {
         return $this->address;
@@ -120,7 +120,7 @@ class AddressesOfMember extends CoreEntity
      *
      * @use             $this->setModified()
      *
-     * @param           BiberLtd\Core\Bundles\AddressManagementBundle\Entity\Type $type
+     * @param           BiberLtd\Bundle\AddressManagementBundle\Entity\Type $type
      *
      * @return          object                $this
      */
@@ -141,7 +141,7 @@ class AddressesOfMember extends CoreEntity
      * @since           1.0.0
      * @version         1.0.0
      *
-     * @return          BiberLtd\Core\Bundles\AddressManagementBundle\Entity\Type           $this->type
+     * @return          BiberLtd\Bundle\AddressManagementBundle\Entity\Type           $this->type
      */
     public function getType() {
         return $this->type;
@@ -237,7 +237,7 @@ class AddressesOfMember extends CoreEntity
      *
      * @use             $this->setModified()
      *
-     * @param           BiberLtd\Core\Bundles\MemberManagementBundle\Entity\Member $member
+     * @param           BiberLtd\Bundle\MemberManagementBundle\Entity\Member $member
      *
      * @return          object                $this
      */
@@ -258,7 +258,7 @@ class AddressesOfMember extends CoreEntity
      * @since           1.0.0
      * @version         1.0.0
      *
-     * @return          BiberLtd\Core\Bundles\MemberManagementBundle\Entity\Member           $this->member
+     * @return          BiberLtd\Bundle\MemberManagementBundle\Entity\Member           $this->member
      */
     public function getMember() {
         return $this->member;

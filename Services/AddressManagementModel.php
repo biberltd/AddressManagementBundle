@@ -51,15 +51,15 @@
  * 
  */
 
-namespace BiberLtd\Core\Bundles\AddressManagementBundle\Services;
+namespace BiberLtd\Bundle\AddressManagementBundle\Services;
 
 /*** Entities to be used */
-use BiberLtd\Core\Bundles\AddressManagementBundle\Entity as BundleEntity;
-use BiberLtd\Core\Bundles\MemberManagementBundle\Entity as MemberEntity;
-use BiberLtd\Core\Bundles\ContactInformationBundle\Entity as ContactEntity;
+use BiberLtd\Bundle\AddressManagementBundle\Entity as BundleEntity;
+use BiberLtd\Bundle\MemberManagementBundle\Entity as MemberEntity;
+use BiberLtd\Bundle\ContactInformationBundle\Entity as ContactEntity;
 /*** Services to be used */
-use BiberLtd\Core\Bundles\MemberManagementBundle\Services as MMBService;
-use BiberLtd\Core\Bundles\ContactInformationBundle\Services as CMBService;
+use BiberLtd\Bundle\MemberManagementBundle\Services as MMBService;
+use BiberLtd\Bundle\ContactInformationBundle\Services as CMBService;
 /*** Core Service */
 use BiberLtd\Core\CoreModel;
 use BiberLtd\Core\Services as CoreServices;
@@ -395,7 +395,7 @@ class AddressManagementModel extends CoreModel {
      *
      * @use             $this->createException()
      * @use             $this->doesProductExist()
-     * @use             \BiberLtd\Core\Bundles\AddressManagementBundle\Entity\AddressType
+     * @use             \BiberLtd\Bundle\AddressManagementBundle\Entity\AddressType
      *
      * @throws          InvalidParameterException
      * @throws          InvalidMethodException
