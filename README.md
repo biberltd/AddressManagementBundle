@@ -1,0 +1,4 @@
+AddressManagementBundle
+=======================
+
+Manages addresses
