@@ -1,7 +1,4 @@
-parameters:
-#    biber_ltd_address_management.example.class: BiberLtd\Bundle\AddressManagementBundle\Example
-
 services:
-#    biber_ltd_address_management.example:
-#        class: %biber_ltd_address_management.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    addressmanagement.model:
+            class:        BiberLtd\Bundle\AddressManagementBundle\Services\AddressManagementModel
+            arguments:    [@kernel, "default", "doctrine"]
