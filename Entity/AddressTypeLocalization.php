@@ -1,6 +1,6 @@
 <?php
-namespace BiberLtd\Core\Bundles\AddressManagementBundle\Entity;
-use BiberLtd\Core\CoreEntity;
+namespace BiberLtd\Bundle\AddressManagementBundle\Entity;
+use BiberLtd\Bundle\CoreBundle\CoreEntity;
 use Doctrine\ORM\Mapping AS ORM;
 
 /** 
@@ -32,7 +32,7 @@ class AddressTypeLocalization extends CoreEntity
     /** 
      * @ORM\Id
      * @ORM\ManyToOne(
-     *     targetEntity="BiberLtd\Core\Bundles\AddressManagementBundle\Entity\AddressType",
+     *     targetEntity="BiberLtd\Bundle\AddressManagementBundle\Entity\AddressType",
      *     inversedBy="localizations"
      * )
      * @ORM\JoinColumn(name="address_type", referencedColumnName="id", nullable=false, onDelete="CASCADE")
@@ -41,7 +41,7 @@ class AddressTypeLocalization extends CoreEntity
 
     /** 
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="BiberLtd\Core\Bundles\MultiLanguageSupportBundle\Entity\Language")
+     * @ORM\ManyToOne(targetEntity="BiberLtd\Bundle\MultiLanguageSupportBundle\Entity\Language")
      * @ORM\JoinColumn(name="language", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
     private $language;
@@ -58,7 +58,7 @@ class AddressTypeLocalization extends CoreEntity
      *
      * @use             $this->setModified()
      *
-     * @param           BiberLtd\Core\Bundles\AddressManagementBundle\Entity\AddressType $address_type
+     * @param           BiberLtd\Bundle\AddressManagementBundle\Entity\AddressType $address_type
      *
      * @return          object                $this
      */
@@ -79,7 +79,7 @@ class AddressTypeLocalization extends CoreEntity
      * @since           1.0.0
      * @version         1.0.0
      *
-     * @return          BiberLtd\Core\Bundles\AddressManagementBundle\Entity\AddressType           $this->address_type
+     * @return          BiberLtd\Bundle\AddressManagementBundle\Entity\AddressType           $this->address_type
      */
     public function getAddressType() {
         return $this->address_type;
@@ -97,7 +97,7 @@ class AddressTypeLocalization extends CoreEntity
      *
      * @use             $this->setModified()
      *
-     * @param           BiberLtd\Core\Bundles\MultiLanguageSupportBundle\Entity\Language $language
+     * @param           BiberLtd\Bundle\MultiLanguageSupportBundle\Entity\Language $language
      *
      * @return          object                $this
      */
@@ -118,7 +118,7 @@ class AddressTypeLocalization extends CoreEntity
      * @since           1.0.0
      * @version         1.0.0
      *
-     * @return          BiberLtd\Core\Bundles\MultiLanguageSupportBundle\Entity\Language           $this->language
+     * @return          BiberLtd\Bundle\MultiLanguageSupportBundle\Entity\Language           $this->language
      */
     public function getLanguage() {
         return $this->language;

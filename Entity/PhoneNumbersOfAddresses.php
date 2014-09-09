@@ -1,7 +1,7 @@
 <?php
 /**
  * @name        PhoneNumbersOfAddresses
- * @package		BiberLtd\Core\AddressManagementBundle
+ * @package		BiberLtd\Bundle\CoreBundle\AddressManagementBundle
  *
  * @author		Can Berkol
  *
@@ -14,8 +14,8 @@
  * @description Model / Entity class.
  *
  */
-namespace BiberLtd\Core\Bundles\AddressManagementBundle\Entity;
-use BiberLtd\Core\CoreEntity;
+namespace BiberLtd\Bundle\AddressManagementBundle\Entity;
+use BiberLtd\Bundle\CoreBundle\CoreEntity;
 use Doctrine\ORM\Mapping AS ORM;
 
 /**
@@ -31,7 +31,7 @@ class PhoneNumbersOfAddresses extends CoreEntity{
      * 
      * 
      * @ORM\ManyToOne(
-     *     targetEntity="BiberLtd\Core\Bundles\ContactInformationBundle\Entity\PhoneNumber",
+     *     targetEntity="BiberLtd\Bundle\ContactInformationBundle\Entity\PhoneNumber",
      *     inversedBy="phoneNumbersOfAddresses"
      * )
      * @ORM\JoinColumn(name="phone", referencedColumnName="id")
@@ -43,7 +43,7 @@ class PhoneNumbersOfAddresses extends CoreEntity{
      * 
      * 
      * @ORM\ManyToOne(
-     *     targetEntity="BiberLtd\Core\Bundles\AddressManagementBundle\Entity\Address",
+     *     targetEntity="BiberLtd\Bundle\AddressManagementBundle\Entity\Address",
      *     inversedBy="phoneNumbersOfAddresses"
      * )
      * @ORM\JoinColumn(name="address", referencedColumnName="id")
