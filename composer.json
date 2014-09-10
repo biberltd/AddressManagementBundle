@@ -1,5 +1,5 @@
 {
-    "name": "biberltd/addressmanagementbundle",
+    "name": "biberltd/address-management-bundle",
     "type": "symfony-bundle",
     "description": "",
     "keywords": [],
@@ -17,10 +17,10 @@
         }
     ],
     "require": {
-        "biberltd/corebundle" : "self.version",
-        "biberltd/contactinformationbundle" : "self.version",
-        "biberltd/locationmanagement" : "self.version",
-        "biberltd/membermanagementbundle" : "self.version"
+        "biberltd/core-bundle" : "self.version",
+        "biberltd/contact-information-bundle" : "self.version",
+        "biberltd/location-management" : "self.version",
+        "biberltd/member-management-bundle" : "self.version"
     },
     "autoload": {
         "psr-0": { "BiberLtd\\Bundle\\AddressManagementBundle": "" }
