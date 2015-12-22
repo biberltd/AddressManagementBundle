@@ -1,0 +1,5 @@
+parameters:
+  # AccessManagementBundle actions
+  # actionname: id
+  # Make sure that keys are unique.
+  actions:

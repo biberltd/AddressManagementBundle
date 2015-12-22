@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<skipper version="3.2.4.1256" mvc="Symfony2" orm="Doctrine2">
+  <module name="\AddressManagementBundle" local-name="AddressManagementBundle" namespace="\BiberLtd\Bundle\AddressManagementBundle\Entity" local-namespace="BiberLtd\Bundle\AddressManagementBundle\Entity" export-format="Doctrine2Php" export-path="../Entity" uuid="00b3018f-adb8-4095-9782-ac595d0ebe98">
+    <entity name="\BiberLtd\Bundle\AddressManagementBundle\Entity\Address" local-name="Address" namespace="\BiberLtd\Bundle\AddressManagementBundle\Entity" description="Holds details of addresses." uuid="2a5813e9-30df-47ca-899d-5d2b06f6b2a2">
+      <field name="id" description="System given id." type="integer" size="20" required="true" unique="true" primary="true" unsigned="true" auto-increment="true" uuid="858c4ddd-6a3e-43fc-998a-999b5450e6f7"/>
+      <field name="title" description="Title of address." type="string" size="255" required="true" uuid="113bb4b2-22e2-4cd4-b208-48a734a91b55"/>
+      <field name="address" description="Street address of the address." type="text" required="true" uuid="d8076750-7122-4608-a004-acf13cda9db9"/>
+      <field name="zip" description="Postal code of the address" type="string" uuid="1a8cf007-dc23-4e99-98cf-579f90953dfd"/>
+      <field name="date_added" description="Date when the entry is first added." type="datetime" required="true" uuid="f2fd80fe-a660-4284-bb1f-1ff8359d5fe5"/>
+      <field name="date_updated" description="Date when the entry is last updated." type="datetime" required="true" uuid="1cb27ccc-04a2-4e1b-bbe8-e54266ec993c"/>
+      <field name="date_removed" description="Date when the entry is marked as removed." type="datetime" uuid="a968fa48-a278-4e78-9cc0-4ebb2693a83b"/>
+      <orm-attributes>
+        <attribute name="export-file-name">Address.php</attribute>
+        <attribute name="table">address</attribute>
+        <attribute name="options">
+          <attribute name="charset">utf8</attribute>
+          <attribute name="collate">utf8_turkish_ci</attribute>
+          <attribute name="engine">innodb</attribute>
+        </attribute>
+      </orm-attributes>
+    </entity>
+    <orm-attributes>
+      <attribute name="namespace">BiberLtd\Bundle\AddressManagementBundle\Entity</attribute>
+      <attribute name="file-suffix">without-suffix</attribute>
+      <attribute name="filename-format">entity-name-only</attribute>
+    </orm-attributes>
+  </module>
+  <visual-data>
+    <entity uuid="2a5813e9-30df-47ca-899d-5d2b06f6b2a2" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="10" position-y="20"/>
+    <module uuid="00b3018f-adb8-4095-9782-ac595d0ebe98" bg-color="#FDEBEF" size-x="11" size-x2="220" size-y="22" size-y2="163"/>
+  </visual-data>
+</skipper>

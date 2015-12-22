@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
-<skipper version="3.0.0.1104" mvc="Symfony2" orm="Doctrine2">
-  <module name="AddressManagementBundle" import-format="Doctrine2Php" import-path="../Entity" uuid="7108c533-7a5c-41ae-be79-0b9b4bbacc81">
-    <entity name="AddressType" description="Stores a list of address types in database." uuid="550437be-f5de-4db7-acd6-13e6a8979921">
+<skipper version="3.2.4.1256" mvc="Symfony2" orm="Doctrine2">
+  <module name="\BiberLtd\Bundle\AddressManagementBundle\Entity" local-name="BiberLtd\Bundle\AddressManagementBundle\Entity" namespace="\" export-format="Doctrine2Php" export-path="../Entity" uuid="7108c533-7a5c-41ae-be79-0b9b4bbacc81">
+    <entity name="\BiberLtd\Bundle\AddressManagementBundle\Entity\AddressType" local-name="AddressType" namespace="\BiberLtd\Bundle\AddressManagementBundle\Entity" local-namespace="BiberLtd\Bundle\AddressManagementBundle\Entity" description="Stores a list of address types in database." uuid="550437be-f5de-4db7-acd6-13e6a8979921">
       <field name="id" description="System given id." type="integer" size="5" required="true" primary="true" auto-increment="true" uuid="c2594790-d294-41bc-bb37-b64c0257eaea"/>
       <field name="code" description="Unique code of address type used internally by the system." type="string" size="155" required="true" unique="true" uuid="12e11152-1fd8-4ba1-86e8-555bb0e1ec59"/>
       <field name="date_added" description="Date when the entry is first added." type="datetime" required="true" uuid="ed108590-302a-4574-8b30-6423b41255fe"/>
@@ -32,7 +32,7 @@
         <attribute name="table">address_type</attribute>
       </orm-attributes>
     </entity>
-    <entity name="AddressTypeLocalization" description="Holds localization values of address type definitions." uuid="d03789a1-ac21-455f-af2f-1e61934459d4">
+    <entity name="\BiberLtd\Bundle\AddressManagementBundle\Entity\AddressTypeLocalization" local-name="AddressTypeLocalization" namespace="\BiberLtd\Bundle\AddressManagementBundle\Entity" local-namespace="BiberLtd\Bundle\AddressManagementBundle\Entity" description="Holds localization values of address type definitions." uuid="d03789a1-ac21-455f-af2f-1e61934459d4">
       <field name="address_type" description="Associated address type." type="integer" size="5" required="true" primary="true" uuid="57d338cd-7abc-45f9-9920-910302cfc815"/>
       <field name="language" description="Localization language." type="integer" size="5" required="true" primary="true" uuid="3068f898-7063-4452-9de4-b4012870a359"/>
       <field name="name" description="Address type name." type="string" size="155" required="true" uuid="9c11c59c-19ae-417c-9e7b-73f0b0e63ff7"/>
@@ -56,19 +56,19 @@
         </attribute>
       </orm-attributes>
     </entity>
-    <association from="AddressTypeLocalization" to="AddressType" caption="idx_f_address_type_localization_address_type" owner-alias="localizations" inverse-alias="address_type" uuid="ee3bb328-1cc0-47c2-8c6c-6662d43d08fb">
+    <association from="\BiberLtd\Bundle\AddressManagementBundle\Entity\AddressTypeLocalization" to="\BiberLtd\Bundle\AddressManagementBundle\Entity\AddressType" caption="idx_f_address_type_localization_address_type" owner-alias="localizations" inverse-alias="address_type" many-owner="true" many-inverse="false" parent-required="true" uuid="ee3bb328-1cc0-47c2-8c6c-6662d43d08fb">
       <association-field from="address_type" to="id"/>
       <orm-attributes>
         <attribute name="on-delete">CASCADE</attribute>
       </orm-attributes>
     </association>
-    <association from="AddressTypeLocalization" to="Language" caption="idx_f_address_type_localization_language" inverse-alias="language" uuid="0a5cb063-a042-4cae-88a1-de7646b0581d">
+    <association from="\BiberLtd\Bundle\AddressManagementBundle\Entity\AddressTypeLocalization" to="\BiberLtd\Bundle\MultiLanguageSupportBundle\Entity\Language" caption="idx_f_address_type_localization_language" inverse-alias="language" many-owner="true" many-inverse="false" parent-required="true" uuid="0a5cb063-a042-4cae-88a1-de7646b0581d">
       <association-field from="language" to="id"/>
       <orm-attributes>
         <attribute name="on-delete">CASCADE</attribute>
       </orm-attributes>
     </association>
-    <entity name="Address" description="Stores addresses." uuid="908913dd-6fec-4b81-af0d-a1842c6d3f6e">
+    <entity name="\BiberLtd\Bundle\AddressManagementBundle\Entity\Address" local-name="Address" namespace="\BiberLtd\Bundle\AddressManagementBundle\Entity" local-namespace="BiberLtd\Bundle\AddressManagementBundle\Entity" description="Stores addresses." uuid="908913dd-6fec-4b81-af0d-a1842c6d3f6e">
       <field name="id" description="Ssytem given id." type="integer" size="20" required="true" unique="true" primary="true" auto-increment="true" uuid="d3cca95c-f2fa-45c0-9abf-65fb41a8ca69"/>
       <field name="title" description="Title of address; i.e. home" type="string" size="150" uuid="b9dc6ea7-1ea8-4618-a731-f060a82f9ba0"/>
       <field name="address" description="Street address." type="string" size="255" required="true" uuid="21f2fcc7-5a5b-4cc8-8051-864d9e8423b5"/>
@@ -81,6 +81,8 @@
       <field name="date_added" description="Date when the entry is first added." type="datetime" required="true" uuid="f8e98ce0-b811-4c21-9e25-63c5db81bbaa"/>
       <field name="date_updated" description="Date when the entry is last updated." type="datetime" required="true" uuid="974fdfa6-c74d-42df-8732-37b1d660eac5"/>
       <field name="date_removed" description="Date when the entry is removed." type="datetime" uuid="009ae227-a11f-4db5-8d25-f968b902efe2"/>
+      <field name="neighborhood" description="Neighborhood of Address." type="integer" unsigned="true" uuid="e46a2716-e082-4805-9b9c-4f75d9d62b68"/>
+      <field name="district" description="District of address." type="integer" unsigned="true" uuid="09ae8a20-8be2-4271-9917-75310fd5c61c"/>
       <index name="idx_u_address_id" unique="true">
         <index-field name="id"/>
       </index>
@@ -111,31 +113,25 @@
         <attribute name="export-file-name">Address.php</attribute>
       </orm-attributes>
     </entity>
-    <association from="Address" to="Country" caption="idx_f_address_country" inverse-alias="country" uuid="ba2d953f-c36d-40c3-8d6f-79d819453731">
-      <association-field from="country" to="id"/>
-      <orm-attributes>
-        <attribute name="on-delete">CASCADE</attribute>
-      </orm-attributes>
-    </association>
-    <association from="Address" to="City" caption="idx_f_address_city" inverse-alias="city" uuid="881513ae-a4fb-4c2a-ba8f-672b70f1ae29">
-      <association-field from="city" to="id"/>
-      <orm-attributes>
-        <attribute name="on-delete">CASCADE</attribute>
-      </orm-attributes>
-    </association>
-    <association from="Address" to="State" caption="idx_f_address_state" inverse-alias="state" uuid="d0bc7f24-2974-4773-9fcf-92395ef914f2">
-      <association-field from="state" to="id"/>
-      <orm-attributes>
-        <attribute name="on-delete">CASCADE</attribute>
-      </orm-attributes>
-    </association>
-    <association from="Address" to="Site" caption="idx_f_address_site" inverse-alias="site" uuid="eb285a4d-3033-4fe9-bd9f-8f715e0593e5">
+    <association from="\BiberLtd\Bundle\AddressManagementBundle\Entity\Address" to="\BiberLtd\Bundle\SiteManagementBundle\Entity\Site" caption="idx_f_address_site" inverse-alias="site" many-owner="true" many-inverse="false" parent-required="true" uuid="eb285a4d-3033-4fe9-bd9f-8f715e0593e5">
       <association-field from="site" to="id"/>
       <orm-attributes>
         <attribute name="on-delete">CASCADE</attribute>
       </orm-attributes>
     </association>
-    <entity name="AddressesOfMember" description="Associates members with addresses." uuid="02725dc2-9c02-4e28-b812-805789b32deb">
+    <association from="\BiberLtd\Bundle\AddressManagementBundle\Entity\Address" to="\BiberLtd\Bundle\LocationManagementBundle\Entity\Neighborhood" caption="idxFNeighborhoodOfAddress" owner-alias="address" inverse-alias="neighborhood" many-owner="true" many-inverse="false" uuid="2e0a7c69-fa97-47eb-9d0f-6797feb540da">
+      <association-field from="neighborhood" to="id"/>
+      <orm-attributes>
+        <attribute name="on-delete">CASCADE</attribute>
+      </orm-attributes>
+    </association>
+    <association from="\BiberLtd\Bundle\AddressManagementBundle\Entity\Address" to="\BiberLtd\Bundle\LocationManagementBundle\Entity\District" caption="idxFDistrictOfAddress" inverse-alias="district" many-owner="true" many-inverse="false" uuid="21019d16-928d-4bbf-8eb8-974d309ba756">
+      <association-field from="district" to="id"/>
+      <orm-attributes>
+        <attribute name="on-delete">CASCADE</attribute>
+      </orm-attributes>
+    </association>
+    <entity name="\BiberLtd\Bundle\AddressManagementBundle\Entity\AddressesOfMember" local-name="AddressesOfMember" namespace="\BiberLtd\Bundle\AddressManagementBundle\Entity" local-namespace="BiberLtd\Bundle\AddressManagementBundle\Entity" description="Associates members with addresses." uuid="02725dc2-9c02-4e28-b812-805789b32deb">
       <field name="address" description="Associated address." type="integer" size="20" required="true" primary="true" uuid="1da04412-fef2-4a4e-8cdd-85e4f91c4f60"/>
       <field name="member" description="Member who resides in the given address." type="integer" size="10" required="true" primary="true" uuid="a282b20c-d395-49d7-bbc5-07a9d8a5b1a0"/>
       <field name="description" description="Address description." type="string" size="155" required="true" uuid="99167d60-d1dc-44c5-a018-3147e8edc51b"/>
@@ -167,24 +163,24 @@
         <attribute name="export-file-name">AddressesOfMember.php</attribute>
       </orm-attributes>
     </entity>
-    <association from="AddressesOfMember" to="Address" caption="idx_f_addresses_of_member_address" inverse-alias="address" uuid="fd18fd34-1b9b-46bc-af9f-498a89fb9ebf">
+    <association from="\BiberLtd\Bundle\AddressManagementBundle\Entity\AddressesOfMember" to="\BiberLtd\Bundle\AddressManagementBundle\Entity\Address" caption="idx_f_addresses_of_member_address" inverse-alias="address" many-owner="true" many-inverse="false" parent-required="true" uuid="fd18fd34-1b9b-46bc-af9f-498a89fb9ebf">
       <association-field from="address" to="id"/>
       <orm-attributes>
         <attribute name="on-delete">CASCADE</attribute>
       </orm-attributes>
     </association>
-    <association from="AddressesOfMember" to="Member" caption="idx_f_addresses_of_member_member" inverse-alias="member" uuid="080ab8de-6f57-4e6a-8892-fa11331bd52e">
+    <association from="\BiberLtd\Bundle\AddressManagementBundle\Entity\AddressesOfMember" to="\BiberLtd\Bundle\MemberManagementBundle\Entity\Member" caption="idx_f_addresses_of_member_member" inverse-alias="member" many-owner="true" many-inverse="false" parent-required="true" uuid="080ab8de-6f57-4e6a-8892-fa11331bd52e">
       <association-field from="member" to="id"/>
       <orm-attributes>
         <attribute name="on-delete">CASCADE</attribute>
       </orm-attributes>
     </association>
-    <association from="AddressesOfMember" to="AddressType" caption="idx_f_addresses_of_member_type" inverse-alias="address_type" uuid="71679fc2-0816-402d-a2a8-f9eb0158b46b">
+    <association from="\BiberLtd\Bundle\AddressManagementBundle\Entity\AddressesOfMember" to="\BiberLtd\Bundle\AddressManagementBundle\Entity\AddressType" caption="idx_f_addresses_of_member_type" inverse-alias="address_type" many-owner="true" many-inverse="false" parent-required="true" uuid="71679fc2-0816-402d-a2a8-f9eb0158b46b">
       <association-field from="type" to="id"/>
     </association>
-    <entity name="PhoneNumbersOfAddresses" description="Associates phone numbers with addresses. Each address can be associated with multiple numbers and vice versa." uuid="081cfa3f-c14e-49d2-adb1-da36b3a5e8c3">
-      <field name="address" type="integer" size="20" primary="true" uuid="fcdbe5c2-668f-4d01-91a9-9369d30d1b29"/>
-      <field name="phone" type="integer" size="20" primary="true" uuid="0abcc266-4a4b-4644-ac18-4d9709b0c5b7"/>
+    <entity name="\BiberLtd\Bundle\AddressManagementBundle\Entity\PhoneNumbersOfAddresses" local-name="PhoneNumbersOfAddresses" namespace="\BiberLtd\Bundle\AddressManagementBundle\Entity" local-namespace="BiberLtd\Bundle\AddressManagementBundle\Entity" description="Associates phone numbers with addresses. Each address can be associated with multiple numbers and vice versa." uuid="081cfa3f-c14e-49d2-adb1-da36b3a5e8c3">
+      <field name="address" type="integer" size="20" required="true" primary="true" uuid="fcdbe5c2-668f-4d01-91a9-9369d30d1b29"/>
+      <field name="phone" type="integer" size="20" required="true" primary="true" uuid="0abcc266-4a4b-4644-ac18-4d9709b0c5b7"/>
       <orm-attributes>
         <attribute name="options">
           <attribute name="charset">utf8</attribute>
@@ -195,13 +191,9 @@
         <attribute name="export-file-name">PhoneNumbersOfAddresses.php</attribute>
       </orm-attributes>
     </entity>
-    <association from="PhoneNumbersOfAddresses" to="Address" caption="idx_f_phone_numbers_of_addresses_address" owner-alias="phoneNumbersOfAddresses" inverse-alias="address" uuid="98390a6e-5d28-4217-b7b7-a653f534f21d">
+    <association from="\BiberLtd\Bundle\AddressManagementBundle\Entity\PhoneNumbersOfAddresses" to="\BiberLtd\Bundle\AddressManagementBundle\Entity\Address" caption="idx_f_phone_numbers_of_addresses_address" owner-alias="phoneNumbersOfAddresses" inverse-alias="address" many-owner="true" many-inverse="false" parent-required="true" uuid="98390a6e-5d28-4217-b7b7-a653f534f21d">
       <association-field from="address" to="id"/>
     </association>
-    <association from="PhoneNumbersOfAddresses" to="PhoneNumber" caption="idx_f_phone_numbers_of_addresses_phone" owner-alias="phoneNumbersOfAddresses" inverse-alias="phone" uuid="f3def538-6bc1-4b39-aa32-061e08c14f4b">
-      <association-field from="phone" to="id"/>
-    </association>
-    <comment caption="AddressManagementBundle Pricing" description="address: 240 TL&#10;addresses_of_member: 130 TL&#10;address_type: &#10;&#10;toplam: 370 TL" uuid="38d0920e-bcf9-4c76-95bd-b8e7e19afc8c"/>
     <orm-attributes>
       <attribute name="namespace">BiberLtd\Bundle\AddressManagementBundle\Entity</attribute>
       <attribute name="filename-format">entity-name-only</attribute>
@@ -209,12 +201,11 @@
     </orm-attributes>
   </module>
   <visual-data>
-    <entity uuid="02725dc2-9c02-4e28-b812-805789b32deb" bg-color="4294967295" hdr-color="4292006610" position-x="50" position-y="227" size-x="0" size-x2="123" size-y="0" size-y2="73"/>
-    <entity uuid="081cfa3f-c14e-49d2-adb1-da36b3a5e8c3" bg-color="4294967295" hdr-color="4292006610" position-x="300" position-y="377" size-x="0" size-x2="134" size-y="0" size-y2="73"/>
-    <comment uuid="38d0920e-bcf9-4c76-95bd-b8e7e19afc8c" bg-color="4294948765" position-x="0" position-y="17" size-x="0" size-x2="169" size-y="0" size-y2="80" txt-color="4278190080"/>
-    <entity uuid="550437be-f5de-4db7-acd6-13e6a8979921" bg-color="4294967295" hdr-color="4292006610" position-x="450" position-y="27" size-x="0" size-x2="130" size-y="0" size-y2="87"/>
-    <module uuid="7108c533-7a5c-41ae-be79-0b9b4bbacc81" bg-color="4278820749" size-x="0" size-x2="650" size-y="0" size-y2="450"/>
-    <entity uuid="908913dd-6fec-4b81-af0d-a1842c6d3f6e" bg-color="4294967295" hdr-color="4292006610" position-x="200" position-y="27" size-x="0" size-x2="111" size-y="0" size-y2="129"/>
-    <entity uuid="d03789a1-ac21-455f-af2f-1e61934459d4" bg-color="4294967295" hdr-color="4292006610" position-x="400" position-y="227" size-x="0" size-x2="130" size-y="0" size-y2="73"/>
+    <entity uuid="02725dc2-9c02-4e28-b812-805789b32deb" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="50" position-y="300" size-x="0" size-x2="335" size-y="0" size-y2="129"/>
+    <entity uuid="081cfa3f-c14e-49d2-adb1-da36b3a5e8c3" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="300" position-y="450" size-x="0" size-x2="370" size-y="0" size-y2="45"/>
+    <entity uuid="550437be-f5de-4db7-acd6-13e6a8979921" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="450" position-y="50" size-x="0" size-x2="300" size-y="0" size-y2="87"/>
+    <entity uuid="908913dd-6fec-4b81-af0d-a1842c6d3f6e" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="100" position-y="50" size-x="0" size-x2="280" size-y="0" size-y2="213"/>
+    <entity uuid="d03789a1-ac21-455f-af2f-1e61934459d4" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="400" position-y="250" size-x="0" size-x2="356" size-y="0" size-y2="73"/>
+    <module uuid="7108c533-7a5c-41ae-be79-0b9b4bbacc81" bg-color="#099F8D" size-x="0" size-x2="770" size-y="0" size-y2="570"/>
   </visual-data>
 </skipper>

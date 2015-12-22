@@ -1,18 +1,12 @@
 <?php
 /**
- * @name        PhoneNumbersOfAddresses
- * @package		BiberLtd\Bundle\CoreBundle\AddressManagementBundle
- *
  * @author		Can Berkol
+ * @author		Murat Ünal
  *
- * @version     1.0.0
- * @date        25.04.2013
+ * @copyright   Biber Ltd. (http://www.biberltd.com) (C) 2015
+ * @license     GPLv3
  *
- * @copyright   Biber Ltd. (http://www.biberltd.com)
- * @license     GPL v3.0
- *
- * @description Model / Entity class.
- *
+ * @date        13.12.2015
  */
 namespace BiberLtd\Bundle\AddressManagementBundle\Entity;
 use BiberLtd\Bundle\CoreBundle\CoreEntity;
@@ -28,46 +22,29 @@ use Doctrine\ORM\Mapping AS ORM;
  */
 class PhoneNumbersOfAddresses extends CoreEntity{
     /**
-     * 
-     * 
-     * @ORM\ManyToOne(
-     *     targetEntity="BiberLtd\Bundle\ContactInformationBundle\Entity\PhoneNumber",
-     *     inversedBy="phoneNumbersOfAddresses"
-     * )
-     * @ORM\JoinColumn(name="phone", referencedColumnName="id")
      * @ORM\Id
+     * @ORM\Column(type="integer", length=20)
+     * @var \BiberLtd\Bundle\ContactInformationBundle\Entity\PhoneNumber
      */
     private $phone;
 
     /**
-     * 
-     * 
      * @ORM\ManyToOne(
      *     targetEntity="BiberLtd\Bundle\AddressManagementBundle\Entity\Address",
      *     inversedBy="phoneNumbersOfAddresses"
      * )
-     * @ORM\JoinColumn(name="address", referencedColumnName="id")
+     * @ORM\JoinColumn(name="address", referencedColumnName="id", nullable=false)
      * @ORM\Id
+     * @var \BiberLtd\Bundle\AddressManagementBundle\Entity\Address
      */
     private $address;
 
     /**
-     * @name                  setAddress ()
-     *                                   Sets the address property.
-     *                                   Updates the data only if stored value and value to be set are different.
+     * @param \BiberLtd\Bundle\AddressManagementBundle\Entity\Address $address
      *
-     * @author          Can Berkol
-     *
-     * @since           1.0.0
-     * @version         1.0.0
-     *
-     * @use             $this->setModified()
-     *
-     * @param           mixed $address
-     *
-     * @return          object                $this
+     * @return $this
      */
-    public function setAddress($address) {
+    public function setAddress(\BiberLtd\Bundle\AddressManagementBundle\Entity\Address $address) {
         if($this->setModified('address', $address)->isModified()) {
             $this->address = $address;
         }
@@ -76,37 +53,18 @@ class PhoneNumbersOfAddresses extends CoreEntity{
     }
 
     /**
-     * @name            getAddress ()
-     *                  Returns the value of address property.
-     *
-     * @author          Can Berkol
-     *
-     * @since           1.0.0
-     * @version         1.0.0
-     *
-     * @return          mixed           $this->address
+     * @return \BiberLtd\Bundle\AddressManagementBundle\Entity\Address
      */
     public function getAddress() {
         return $this->address;
     }
 
     /**
-     * @name            setPhone ()
-     *                  Sets the phone property.
-     *                  Updates the data only if stored value and value to be set are different.
+     * @param \BiberLtd\Bundle\ContactInformationBundle\Entity\PhoneNumber $phone
      *
-     * @author          Can Berkol
-     *
-     * @since           1.0.0
-     * @version         1.0.0
-     *
-     * @use             $this->setModified()
-     *
-     * @param           mixed $phone
-     *
-     * @return          object                $this
+     * @return $this
      */
-    public function setPhone($phone) {
+    public function setPhone(\BiberLtd\Bundle\ContactInformationBundle\Entity\PhoneNumber $phone) {
         if($this->setModified('phone', $phone)->isModified()) {
             $this->phone = $phone;
         }
@@ -115,29 +73,10 @@ class PhoneNumbersOfAddresses extends CoreEntity{
     }
 
     /**
-     * @name            getPhone ()
-     *                  Returns the value of phone property.
-     *
-     * @author          Can Berkol
-     *
-     * @since           1.0.0
-     * @version         1.0.0
-     *
-     * @return          mixed           $this->phone
+     * @return \BiberLtd\Bundle\ContactInformationBundle\Entity\PhoneNumber
      */
     public function getPhone() {
         return $this->phone;
     }
 
 }
-/**
- * Change Log:
- * **************************************
- * v1.0.0                      Can Berkol
- * 06.03.2014
- * **************************************
- * A getAddress()
- * A getPhone()
- * A setAddress()
- * A setPhone()
- */

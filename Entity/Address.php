@@ -1,20 +1,13 @@
 <?php
 /**
- * @name        Address
- * @package		BiberLtd\Bundle\CoreBundle\AddressManagementBundle
- *
+ * @author		Can Berkol
  * @author		Murat Ünal
  *
- * @version     1.0.0
- * @date        20.09.2013
+ * @copyright   Biber Ltd. (http://www.biberltd.com) (C) 2015
+ * @license     GPLv3
  *
- * @copyright   Biber Ltd. (http://www.biberltd.com)
- * @license     GPL v3.0
- *
- * @description Model / Entity class.
- *
+ * @date        10.12.2015
  */
-
 namespace BiberLtd\Bundle\AddressManagementBundle\Entity;
 use Doctrine\ORM\Mapping AS ORM;
 use BiberLtd\Bundle\CoreBundle\CoreEntity;
@@ -40,26 +33,31 @@ class Address extends CoreEntity
      * @ORM\Id
      * @ORM\Column(type="integer", length=20)
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @var integer
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=150, nullable=true)
+     * @var string
      */
     private $title;
 
     /** 
      * @ORM\Column(type="string", length=255, nullable=false)
+     * @var string
      */
     private $address;
 
     /** 
      * @ORM\Column(type="string", length=20, nullable=true)
+     * @var string
      */
     private $zip;
 
     /** 
      * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
      */
     public $date_removed;
 
@@ -68,78 +66,86 @@ class Address extends CoreEntity
      *     targetEntity="BiberLtd\Bundle\AddressManagementBundle\Entity\PhoneNumbersOfAddresses",
      *     mappedBy="address"
      * )
+     * @var array
      */
     private $phoneNumbersOfAddresses;
 
     /** 
      * @ORM\Column(type="datetime", nullable=false)
+     * @var \DateTime
      */
     public $date_updated;
 
     /** 
      * @ORM\Column(type="datetime", nullable=false)
+     * @var \DateTime
      */
     public $date_added;
 
     /** 
      * @ORM\Column(type="string", length=5, nullable=true)
+     * @var string
      */
     private $nr;
 
     /** 
-     * @ORM\ManyToOne(targetEntity="BiberLtd\Bundle\LocationManagementBundle\Entity\Country")
-     * @ORM\JoinColumn(name="country", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     * 
+     * @ORM\Column(type="integer", length=10, nullable=false)
+     * @var \BiberLtd\Bundle\LocationManagementBundle\Entity\Country
      */
     private $country;
 
     /** 
-     * @ORM\ManyToOne(targetEntity="BiberLtd\Bundle\LocationManagementBundle\Entity\City")
-     * @ORM\JoinColumn(name="city", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     * 
+     * @ORM\Column(type="integer", length=10, nullable=false)
+     * @var \BiberLtd\Bundle\LocationManagementBundle\Entity\City
      */
     private $city;
 
     /** 
-     * @ORM\ManyToOne(targetEntity="BiberLtd\Bundle\LocationManagementBundle\Entity\State")
-     * @ORM\JoinColumn(name="state", referencedColumnName="id", onDelete="CASCADE")
+     * 
+     * @ORM\Column(type="integer", length=10, nullable=true)
+     * @var \BiberLtd\Bundle\LocationManagementBundle\Entity\State
      */
     private $state;
 
     /** 
      * @ORM\ManyToOne(targetEntity="BiberLtd\Bundle\SiteManagementBundle\Entity\Site")
      * @ORM\JoinColumn(name="site", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     * @var \BiberLtd\Bundle\SiteManagementBundle\Entity\Site
      */
     private $site;
 
-    /******************************************************************
-     * PUBLIC SET AND GET FUNCTIONS                                   *
-     ******************************************************************/
+    /**
+     * @ORM\ManyToOne(
+     *     targetEntity="BiberLtd\Bundle\LocationManagementBundle\Entity\Neighborhood",
+     *     inversedBy="address"
+     * )
+     * @ORM\JoinColumn(name="neighborhood", referencedColumnName="id", onDelete="CASCADE")
+     * @var \BiberLtd\Bundle\LocationManagementBundle\Entity\Neighborhood
+     */
+    private $neighborhood;
 
     /**
-     * @name            getId()
-     *  				Gets $id property.
-     * .
-     * @author          Murat Ünal
-     * @since			1.0.0
-     * @version         1.0.0
-     *
-     * @return          string          $this->id
+     * @ORM\ManyToOne(targetEntity="BiberLtd\Bundle\LocationManagementBundle\Entity\District")
+     * @ORM\JoinColumn(name="district", referencedColumnName="id", onDelete="CASCADE")
+     * @var \BiberLtd\Bundle\LocationManagementBundle\Entity\District
+     */
+    private $district;
+
+    /**
+     * @return mixed
      */
     public function getId(){
         return $this->id;
     }
+
     /**
-     * @name            setTitle()
-     *                  Sets $title property.
-     * .
-     * @author          Murat Ünal
-     * @since           1.0.0
-     * @version         1.0.0
+     * @param string $title
      *
-     * @param           string          $title
-     *
-     * @return          object          $this
+     * @return $this
      */
-    public function setTitle($title){
+    public function setTitle(\string $title){
         if(!$this->setModified('title', $title)->isModified()){
             return $this;
         }
@@ -147,32 +153,20 @@ class Address extends CoreEntity
 
         return $this;
     }
+
     /**
-     * @name            getTitle()
-     *                  Gets $title property.
-     * .
-     * @author          Murat Ünal
-     * @since           1.0.0
-     * @version         1.0.0
-     *
-     * @return          string          $this->title
+     * @return string
      */
     public function getTitle(){
         return $this->title;
     }
+
     /**
-     * @name            setAddress()
-     *                  Sets $address property.
-     * .
-     * @author          Murat Ünal
-     * @since           1.0.0
-     * @version         1.0.0
+     * @param string $address
      *
-     * @param           string          $address
-     *
-     * @return          object          $this
+     * @return $this
      */
-    public function setAddress($address){
+    public function setAddress(\string $address){
         if(!$this->setModified('address', $address)->isModified()){
             return $this;
         }
@@ -180,32 +174,20 @@ class Address extends CoreEntity
 
         return $this;
     }
+
     /**
-     * @name            getAddress()
-     *                  Gets $address property.
-     * .
-     * @author          Murat Ünal
-     * @since           1.0.0
-     * @version         1.0.0
-     *
-     * @return          string          $this->address
+     * @return string
      */
     public function getAddress(){
         return $this->address;
     }
+
     /**
-     * @name            setZip()
-     *                  Sets $zip property.
-     * .
-     * @author          Murat Ünal
-     * @since           1.0.0
-     * @version         1.0.0
+     * @param string $zip
      *
-     * @param           string          $zip
-     *
-     * @return          object          $this
+     * @return $this
      */
-    public function setZip($zip){
+    public function setZip(\string $zip){
         if(!$this->setModified('zip', $zip)->isModified()){
             return $this;
         }
@@ -213,33 +195,20 @@ class Address extends CoreEntity
 
         return $this;
     }
+
     /**
-     * @name            getZip()
-     *                  Gets $zip property.
-     * .
-     * @author          Murat Ünal
-     * @since           1.0.0
-     * @version         1.0.0
-     *
-     * @return          string          $this->zip
+     * @return string
      */
     public function getZip(){
         return $this->zip;
     }
 
     /**
-     * @name            setCountry()
-     *                  Sets $country property.
-     * .
-     * @author          Murat Ünal
-     * @since           1.0.0
-     * @version         1.0.0
+     * @param \BiberLtd\Bundle\LocationManagementBundle\Entity\Country $country
      *
-     * @param           BiberLtd\Bundle\LocationManagementBundle\Entity\Country           $country
-     *
-     * @return          object          $this
+     * @return $this
      */
-    public function setCountry($country){
+    public function setCountry(\BiberLtd\Bundle\LocationManagementBundle\Entity\Country $country){
         if(!$this->setModified('country', $country)->isModified()){
             return $this;
         }
@@ -247,32 +216,20 @@ class Address extends CoreEntity
 
         return $this;
     }
+
     /**
-     * @name            getCountry()
-     *                  Gets $country property.
-     * .
-     * @author          Murat Ünal
-     * @since           1.0.0
-     * @version         1.0.0
-     *
-     * @return          BiberLtd\Bundle\LocationManagementBundle\Entity\Country           $this->country
+     * @return \BiberLtd\Bundle\LocationManagementBundle\Entity\Country
      */
     public function getCountry(){
         return $this->country;
     }
-    /**
-     * @name            setCity()
-     *                  Sets $city property.
-     * .
-     * @author          Murat Ünal
-     * @since           1.0.0
-     * @version         1.0.0
+
+    /***
+     * @param \BiberLtd\Bundle\LocationManagementBundle\Entity\City $city
      *
-     * @param           BiberLtd\Bundle\LocationManagementBundle\Entity\City          $city
-     *
-     * @return          object          $this
+     * @return $this
      */
-    public function setCity($city){
+    public function setCity(\BiberLtd\Bundle\LocationManagementBundle\Entity\City $city){
         if(!$this->setModified('city', $city)->isModified()){
             return $this;
         }
@@ -280,32 +237,20 @@ class Address extends CoreEntity
 
         return $this;
     }
+
     /**
-     * @name            getCity()
-     *                  Gets $city property.
-     * .
-     * @author          Murat Ünal
-     * @since           1.0.0
-     * @version         1.0.0
-     *
-     * @return          BiberLtd\Bundle\LocationManagementBundle\Entity\City          $this->city
+     * @return \BiberLtd\Bundle\LocationManagementBundle\Entity\City
      */
     public function getCity(){
         return $this->city;
     }
+
     /**
-     * @name            setState()
-     *                  Sets $state property.
-     * .
-     * @author          Murat Ünal
-     * @since           1.0.0
-     * @version         1.0.0
+     * @param \BiberLtd\Bundle\LocationManagementBundle\Entity\State $state
      *
-     * @param           BiberLtd\Bundle\LocationManagementBundle\Entity\State          $state
-     *
-     * @return          object          $this
+     * @return $this
      */
-    public function setState($state){
+    public function setState(\BiberLtd\Bundle\LocationManagementBundle\Entity\State $state){
         if(!$this->setModified('state', $state)->isModified()){
             return $this;
         }
@@ -313,37 +258,20 @@ class Address extends CoreEntity
 
         return $this;
     }
+
     /**
-     * @name            getState()
-     *                  Gets $state property.
-     * .
-     * @author          Murat Ünal
-     * @since           1.0.0
-     * @version         1.0.0
-     *
-     * @return          BiberLtd\Bundle\LocationManagementBundle\Entity\State          $this->state
+     * @return \BiberLtd\Bundle\LocationManagementBundle\Entity\State
      */
     public function getState(){
         return $this->state;
     }
 
     /**
-     * @name            setNr ()
-     *                  Sets the nr property.
-     *                  Updates the data only if stored value and value to be set are different.
+     * @param string $nr
      *
-     * @author          Can Berkol
-     *
-     * @since           1.0.0
-     * @version         1.0.0
-     *
-     * @use             $this->setModified()
-     *
-     * @param           string $nr
-     *
-     * @return          object                $this
+     * @return $this
      */
-    public function setNr($nr) {
+    public function setNr(\string $nr) {
         if(!$this->setModified('nr', $nr)->isModified()) {
             return $this;
         }
@@ -351,40 +279,51 @@ class Address extends CoreEntity
     }
 
     /**
-     * @name            getNr ()
-     *                  Returns the value of nr property.
-     *
-     * @author          Can Berkol
-     *
-     * @since           1.0.0
-     * @version         1.0.0
-     *
-     * @return          string           $this->nr
+     * @return string
      */
     public function getNr() {
         return $this->nr;
     }
 
+    /**
+     * @param \BiberLtd\Bundle\LocationManagementBundle\Entity\Neighborhood $neighborhood
+     *
+     * @return $this
+     */
+    public function setNeighborhood(\BiberLtd\Bundle\LocationManagementBundle\Entity\Neighborhood $neighborhood){
+        if(!$this->setModified('neighborhood', $neighborhood)->isModified()){
+            return $this;
+        }
+        $this->neighborhood = $neighborhood;
 
+        return $this;
+    }
+
+    /**
+     * @return \BiberLtd\Bundle\LocationManagementBundle\Entity\Country
+     */
+    public function getNeighborhood(){
+        return $this->country;
+    }
+
+    /**
+     * @param \BiberLtd\Bundle\LocationManagementBundle\Entity\District $district
+     *
+     * @return $this
+     */
+    public function setDistrict(\BiberLtd\Bundle\LocationManagementBundle\Entity\District $district){
+        if(!$this->setModified('district', $district)->isModified()){
+            return $this;
+        }
+        $this->country = $district;
+
+        return $this;
+    }
+
+    /**
+     * @return \BiberLtd\Bundle\LocationManagementBundle\Entity\District
+     */
+    public function getDistrict(){
+        return $this->district;
+    }
 }
-/**
- * Change Log:
- * **************************************
- * v1.0.0                      Murat Ünal
- * 20.09.2013
- * **************************************
- * A getLocalizations()
- * A getAdvertisements()
- * A getHeight()
- * A getId()
- * A getPricePerClick()
- * A getPricePerView()
- * A getWidth()
- *
- * A setLocalizations()
- * A setAdvertisements()
- * A setHeight()
- * A setPricePerClick()
- * A setWidth()
- *
- */

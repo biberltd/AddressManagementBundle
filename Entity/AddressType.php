@@ -1,4 +1,13 @@
 <?php
+/**
+ * @author		Can Berkol
+ * @author		Murat Ünal
+ *
+ * @copyright   Biber Ltd. (http://www.biberltd.com) (C) 2015
+ * @license     GPLv3
+ *
+ * @date        13.12.2015
+ */
 namespace BiberLtd\Bundle\AddressManagementBundle\Entity;
 use BiberLtd\Bundle\CoreBundle\CoreLocalizableEntity;
 use Doctrine\ORM\Mapping AS ORM;
@@ -25,26 +34,31 @@ class AddressType extends CoreLocalizableEntity
      * @ORM\Id
      * @ORM\Column(type="integer", length=5)
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @var int
      */
     private $id;
 
     /** 
      * @ORM\Column(type="string", unique=true, length=155, nullable=false)
+     * @var string
      */
     private $code;
 
     /** 
      * @ORM\Column(type="datetime", nullable=false)
+     * @var \DateTime
      */
     public $date_added;
 
     /** 
      * @ORM\Column(type="datetime", nullable=false)
+     * @var \DateTime
      */
     public $date_updated;
 
     /** 
      * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
      */
     public $date_removed;
 
@@ -53,26 +67,16 @@ class AddressType extends CoreLocalizableEntity
      *     targetEntity="BiberLtd\Bundle\AddressManagementBundle\Entity\AddressTypeLocalization",
      *     mappedBy="address_type"
      * )
+     * @var array
      */
     protected $localizations;
 
-    /**
-     * @name                  setCode ()
-     *                                Sets the code property.
-     *                                Updates the data only if stored value and value to be set are different.
-     *
-     * @author          Can Berkol
-     *
-     * @since           1.0.0
-     * @version         1.0.0
-     *
-     * @use             $this->setModified()
-     *
-     * @param           string $code
-     *
-     * @return          object                $this
-     */
-    public function setCode($code) {
+	/**
+	 * @param string $code
+	 *
+	 * @return $this
+	 */
+    public function setCode(\string $code) {
         if(!$this->setModified('code', $code)->isModified()) {
             return $this;
         }
@@ -80,35 +84,17 @@ class AddressType extends CoreLocalizableEntity
 		return $this;
     }
 
-    /**
-     * @name            getCode ()
-     *                          Returns the value of code property.
-     *
-     * @author          Can Berkol
-     *
-     * @since           1.0.0
-     * @version         1.0.0
-     *
-     * @return          string           $this->code
-     */
+	/**
+	 * @return string
+	 */
     public function getCode() {
         return $this->code;
     }
 
-    /**
-     * @name            getId()
-     *                      Returns the value of id property.
-     *
-     * @author          Can Berkol
-     *
-     * @since           1.0.0
-     * @version         1.0.0
-     *
-     * @return          integer           $this->id
-     */
+	/**
+	 * @return int
+	 */
     public function getId() {
         return $this->id;
     }
-
-
 }

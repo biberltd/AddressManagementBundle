@@ -17,10 +17,10 @@
         }
     ],
     "require": {
-        "biberltd/core-bundle" : "~3.1",
-        "biberltd/contact-information-bundle" : "~3.1",
-        "biberltd/location-management" : "~3.1",
-        "biberltd/member-management-bundle" : "~3.1"
+        "biberltd/core-bundle" : "~3.4",
+        "biberltd/contact-information-bundle" : "~3.4",
+        "biberltd/location-management" : "~3.4",
+        "biberltd/member-management-bundle" : "~3.4"
     },
     "autoload": {
         "psr-0": { "BiberLtd\\Bundle\\AddressManagementBundle": "" }
