@@ -145,7 +145,7 @@ class Address extends CoreEntity
      *
      * @return $this
      */
-    public function setTitle(\string $title){
+    public function setTitle(string $title){
         if(!$this->setModified('title', $title)->isModified()){
             return $this;
         }
@@ -166,7 +166,7 @@ class Address extends CoreEntity
      *
      * @return $this
      */
-    public function setAddress(\string $address){
+    public function setAddress(string $address){
         if(!$this->setModified('address', $address)->isModified()){
             return $this;
         }
@@ -187,7 +187,7 @@ class Address extends CoreEntity
      *
      * @return $this
      */
-    public function setZip(\string $zip){
+    public function setZip(string $zip){
         if(!$this->setModified('zip', $zip)->isModified()){
             return $this;
         }
@@ -271,7 +271,7 @@ class Address extends CoreEntity
      *
      * @return $this
      */
-    public function setNr(\string $nr) {
+    public function setNr(string $nr) {
         if(!$this->setModified('nr', $nr)->isModified()) {
             return $this;
         }

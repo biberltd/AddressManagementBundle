@@ -141,7 +141,7 @@ class AddressesOfMember extends CoreEntity
 	 *
 	 * @return $this
 	 */
-    public function setAlias(\string $alias) {
+    public function setAlias(string $alias) {
         if(!$this->setModified('alias', $alias)->isModified()) {
             return $this;
         }
@@ -161,7 +161,7 @@ class AddressesOfMember extends CoreEntity
 	 *
 	 * @return $this
 	 */
-    public function setDescription(\string $description) {
+    public function setDescription(string $description) {
         if(!$this->setModified('description', $description)->isModified()) {
             return $this;
         }

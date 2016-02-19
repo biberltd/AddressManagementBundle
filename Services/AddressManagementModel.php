@@ -68,7 +68,7 @@ class AddressManagementModel extends CoreModel {
      * @return array|\BiberLtd\Bundle\CoreBundle\Responses\ModelResponse
      */
     public function deleteAddresses($collection) {
-        $timeStamp = time();
+        $timeStamp = microtime(true);
         if (!is_array($collection)) {
             return $this->createException('InvalidParameterValueException', 'Invalid parameter value. Parameter must be an array collection', 'E:S:001');
         }
@@ -86,10 +86,10 @@ class AddressManagementModel extends CoreModel {
             }
         }
         if ($countDeleted < 0) {
-            return new ModelResponse(null, 0, 0, null, true, 'E:E:001', 'Unable to delete all or some of the selected entries.', $timeStamp, time());
+            return new ModelResponse(null, 0, 0, null, true, 'E:E:001', 'Unable to delete all or some of the selected entries.', $timeStamp, microtime(true));
         }
         $this->em->flush();
-        return new ModelResponse(null, 0, 0, null, false, 'S:D:001', 'Selected entries have been successfully removed from database.', $timeStamp, time());
+        return new ModelResponse(null, 0, 0, null, false, 'S:D:001', 'Selected entries have been successfully removed from database.', $timeStamp, microtime(true));
     }
 
     /**
@@ -107,7 +107,7 @@ class AddressManagementModel extends CoreModel {
      * @return \BiberLtd\Bundle\AddressManagementBundle\Services\ModelResponse|\BiberLtd\Bundle\CoreBundle\Responses\ModelResponse
      */
     public function deleteAddressTypes($collection) {
-        $timeStamp = time();
+        $timeStamp = microtime(true);
         if (!is_array($collection)) {
             return $this->createException('InvalidParameterValueException', 'Invalid parameter value. Parameter must be an array collection', 'E:S:001');
         }
@@ -125,10 +125,10 @@ class AddressManagementModel extends CoreModel {
             }
         }
         if ($countDeleted < 0) {
-            return new ModelResponse(null, 0, 0, null, true, 'E:E:001', 'Unable to delete all or some of the selected entries.', $timeStamp, time());
+            return new ModelResponse(null, 0, 0, null, true, 'E:E:001', 'Unable to delete all or some of the selected entries.', $timeStamp, microtime(true));
         }
         $this->em->flush();
-        return new ModelResponse(null, 0, 0, null, false, 'S:D:001', 'Selected entries have been successfully removed from database.', $timeStamp, time());
+        return new ModelResponse(null, 0, 0, null, false, 'S:D:001', 'Selected entries have been successfully removed from database.', $timeStamp, microtime(true));
     }
 
     /**
@@ -187,14 +187,14 @@ class AddressManagementModel extends CoreModel {
      */
     public function insertAddressTypes($collection)
     {
-        $timeStamp = time();
+        $timeStamp = microtime(true);
         if (!is_array($collection)) {
             return $this->createException('InvalidParameterValueException', 'Invalid parameter value. Parameter must be an array collection', 'E:S:001');
         }
         $countInserts = 0;
         $countLocalizations = 0;
-        $insertedItems = array();
-        $localizations = array();
+        $insertedItems = [];
+        $localizations = [];
         $now = new \DateTime('now', new \DateTimeZone($this->kernel->getContainer()->getParameter('app_timezone')));
         foreach ($collection as $data) {
             if ($data instanceof BundleEntity\AddressType) {
@@ -239,9 +239,9 @@ class AddressManagementModel extends CoreModel {
         }
         if ($countInserts > 0) {
             $this->em->flush();
-            return new ModelResponse($insertedItems, $countInserts, 0, null, false, 'S:D:003', 'Selected entries have been successfully inserted into database.', $timeStamp, time());
+            return new ModelResponse($insertedItems, $countInserts, 0, null, false, 'S:D:003', 'Selected entries have been successfully inserted into database.', $timeStamp, microtime(true));
         }
-        return new ModelResponse(null, 0, 0, null, true, 'E:D:003', 'One or more entities cannot be inserted into database.', $timeStamp, time());
+        return new ModelResponse(null, 0, 0, null, true, 'E:D:003', 'One or more entities cannot be inserted into database.', $timeStamp, microtime(true));
     }
 
 	/**
@@ -260,12 +260,12 @@ class AddressManagementModel extends CoreModel {
 	 */
 	public function insertAddresses($collection)
 	{
-		$timeStamp = time();
+		$timeStamp = microtime(true);
 		if (!is_array($collection)) {
 			return $this->createException('InvalidParameterValueException', 'Invalid parameter value. Parameter must be an array collection', 'E:S:001');
 		}
 		$countInserts = 0;
-		$insertedItems = array();
+		$insertedItems = [];
 		$now = new \DateTime('now', new \DateTimeZone($this->kernel->getContainer()->getParameter('app_timezone')));
 		$lModel = $this->kernel->getContainer()->get('locationmanagement.model');
 		foreach ($collection as $data) {
@@ -343,9 +343,9 @@ class AddressManagementModel extends CoreModel {
 
 		if ($countInserts > 0) {
 			$this->em->flush();
-			return new ModelResponse($insertedItems, $countInserts, 0, null, false, 'S:D:003', 'Selected entries have been successfully inserted into database.', $timeStamp, time());
+			return new ModelResponse($insertedItems, $countInserts, 0, null, false, 'S:D:003', 'Selected entries have been successfully inserted into database.', $timeStamp, microtime(true));
 		}
-		return new ModelResponse(null, 0, 0, null, true, 'E:D:003', 'One or more entities cannot be inserted into database.', $timeStamp, time());
+		return new ModelResponse(null, 0, 0, null, true, 'E:D:003', 'One or more entities cannot be inserted into database.', $timeStamp, microtime(true));
 	}
 
 	/**
@@ -355,9 +355,9 @@ class AddressManagementModel extends CoreModel {
 	 */
 	public function getAddress($address)
 	{
-		$timeStamp = time();
+		$timeStamp = microtime(true);
 		if ($address instanceof BundleEntity\Address) {
-			return new ModelResponse($address, 1, 0, null, false, 'S:D:002', 'Entries successfully fetched from database.', $timeStamp, time());
+			return new ModelResponse($address, 1, 0, null, false, 'S:D:002', 'Entries successfully fetched from database.', $timeStamp, microtime(true));
 		}
 		$result = null;
 		switch ($address) {
@@ -366,10 +366,10 @@ class AddressManagementModel extends CoreModel {
 				break;
 		}
 		if (is_null($result)) {
-			return new ModelResponse($result, 0, 0, null, true, 'E:D:002', 'Unable to find request entry in database.', $timeStamp, time());
+			return new ModelResponse($result, 0, 0, null, true, 'E:D:002', 'Unable to find request entry in database.', $timeStamp, microtime(true));
 		}
 
-		return new ModelResponse($result, 1, 0, null, false, 'S:D:002', 'Entries successfully fetched from database.', $timeStamp, time());
+		return new ModelResponse($result, 1, 0, null, false, 'S:D:002', 'Entries successfully fetched from database.', $timeStamp, microtime(true));
 	}
 
 	/**
@@ -379,9 +379,9 @@ class AddressManagementModel extends CoreModel {
 	 */
 	public function getAddressType($type)
 	{
-		$timeStamp = time();
+		$timeStamp = microtime(true);
 		if ($type instanceof BundleEntity\AddressType) {
-			return new ModelResponse($type, 1, 0, null, false, 'S:D:002', 'Entries successfully fetched from database.', $timeStamp, time());
+			return new ModelResponse($type, 1, 0, null, false, 'S:D:002', 'Entries successfully fetched from database.', $timeStamp, microtime(true));
 		}
 		$result = null;
 		switch ($type) {
@@ -393,10 +393,10 @@ class AddressManagementModel extends CoreModel {
 				break;
 		}
 		if (is_null($result)) {
-			return new ModelResponse($result, 0, 0, null, true, 'E:D:002', 'Unable to find request entry in database.', $timeStamp, time());
+			return new ModelResponse($result, 0, 0, null, true, 'E:D:002', 'Unable to find request entry in database.', $timeStamp, microtime(true));
 		}
 
-		return new ModelResponse($result, 1, 0, null, false, 'S:D:002', 'Entries successfully fetched from database.', $timeStamp, time());
+		return new ModelResponse($result, 1, 0, null, false, 'S:D:002', 'Entries successfully fetched from database.', $timeStamp, microtime(true));
 	}
 
 	/**
@@ -408,7 +408,7 @@ class AddressManagementModel extends CoreModel {
 	 */
 	public function listAddresses(array $filter = null, array $sortOrder = null, array $limit = null)
 	{
-		$timeStamp = time();
+		$timeStamp = microtime(true);
 		if (!is_array($sortOrder) && !is_null($sortOrder)) {
 			return $this->createException('InvalidSortOrderException', '$sortOrder must be an array with key => value pairs where value can only be "asc" or "desc".', 'E:S:002');
 		}
@@ -445,7 +445,7 @@ class AddressManagementModel extends CoreModel {
 
 		$result = $q->getResult();
 
-		$entities = array();
+		$entities = [];
 		foreach ($result as $entry) {
 			$id = $entry->getProduct()->getId();
 			if (!isset($unique[$id])) {
@@ -455,9 +455,9 @@ class AddressManagementModel extends CoreModel {
 		}
 		$totalRows = count($entities);
 		if ($totalRows < 1) {
-			return new ModelResponse(null, 0, 0, null, true, 'E:D:002', 'No entries found in database that matches to your criterion.', $timeStamp, time());
+			return new ModelResponse(null, 0, 0, null, true, 'E:D:002', 'No entries found in database that matches to your criterion.', $timeStamp, microtime(true));
 		}
-		return new ModelResponse($entities, $totalRows, 0, null, false, 'S:D:002', 'Entries successfully fetched from database.', $timeStamp, time());
+		return new ModelResponse($entities, $totalRows, 0, null, false, 'S:D:002', 'Entries successfully fetched from database.', $timeStamp, microtime(true));
 	}
 
 	/**
@@ -469,7 +469,7 @@ class AddressManagementModel extends CoreModel {
 	 */
 	public function listAddressTypes(array $filter = null, array $sortOrder = null, array $limit = null)
 	{
-		$timeStamp = time();
+		$timeStamp = microtime(true);
 		if (!is_array($sortOrder) && !is_null($sortOrder)) {
 			return $this->createException('InvalidSortOrderException', '$sortOrder must be an array with key => value pairs where value can only be "asc" or "desc".', 'E:S:002');
 		}
@@ -510,7 +510,7 @@ class AddressManagementModel extends CoreModel {
 
 		$result = $q->getResult();
 
-		$entities = array();
+		$entities = [];
 		foreach ($result as $entry) {
 			$id = $entry->getProduct()->getId();
 			if (!isset($unique[$id])) {
@@ -520,9 +520,9 @@ class AddressManagementModel extends CoreModel {
 		}
 		$totalRows = count($entities);
 		if ($totalRows < 1) {
-			return new ModelResponse(null, 0, 0, null, true, 'E:D:002', 'No entries found in database that matches to your criterion.', $timeStamp, time());
+			return new ModelResponse(null, 0, 0, null, true, 'E:D:002', 'No entries found in database that matches to your criterion.', $timeStamp, microtime(true));
 		}
-		return new ModelResponse($entities, $totalRows, 0, null, false, 'S:D:002', 'Entries successfully fetched from database.', $timeStamp, time());
+		return new ModelResponse($entities, $totalRows, 0, null, false, 'S:D:002', 'Entries successfully fetched from database.', $timeStamp, microtime(true));
 	}
 
 	/**
@@ -542,9 +542,9 @@ class AddressManagementModel extends CoreModel {
 	 */
 	public function updateAddresss(array $collection)
 	{
-		$timeStamp = time();
+		$timeStamp = microtime(true);
 		$countUpdates = 0;
-		$updatedItems = array();
+		$updatedItems = [];
 		$now = new \DateTime('now', new \DateTimeZone($this->kernel->getContainer()->getParameter('app_timezone')));
 		foreach ($collection as $data) {
 			if ($data instanceof BundleEntity\Address) {
@@ -630,9 +630,9 @@ class AddressManagementModel extends CoreModel {
 		}
 		if ($countUpdates > 0) {
 			$this->em->flush();
-			return new ModelResponse($updatedItems, $countUpdates, 0, null, false, 'S:D:004', 'Selected entries have been successfully updated within database.', $timeStamp, time());
+			return new ModelResponse($updatedItems, $countUpdates, 0, null, false, 'S:D:004', 'Selected entries have been successfully updated within database.', $timeStamp, microtime(true));
 		}
-		return new ModelResponse(null, 0, 0, null, true, 'E:D:004', 'One or more entities cannot be updated within database.', $timeStamp, time());
+		return new ModelResponse(null, 0, 0, null, true, 'E:D:004', 'One or more entities cannot be updated within database.', $timeStamp, microtime(true));
 	}
 
 	/**
@@ -651,10 +651,10 @@ class AddressManagementModel extends CoreModel {
 	 */
 	public function updateAddressTypes(array $collection)
 	{
-		$timeStamp = time();
+		$timeStamp = microtime(true);
 		$countUpdates = 0;
-		$updatedItems = array();
-		$localizations = array();
+		$updatedItems = [];
+		$localizations = [];
 		$now = new \DateTime('now', new \DateTimeZone($this->kernel->getContainer()->getParameter('app_timezone')));
 		foreach ($collection as $data) {
 			if ($data instanceof BundleEntity\ProductAttribute) {
@@ -722,9 +722,9 @@ class AddressManagementModel extends CoreModel {
 		}
 		if ($countUpdates > 0) {
 			$this->em->flush();
-			return new ModelResponse($updatedItems, $countUpdates, 0, null, false, 'S:D:004', 'Selected entries have been successfully updated within database.', $timeStamp, time());
+			return new ModelResponse($updatedItems, $countUpdates, 0, null, false, 'S:D:004', 'Selected entries have been successfully updated within database.', $timeStamp, microtime(true));
 		}
-		return new ModelResponse(null, 0, 0, null, true, 'E:D:004', 'One or more entities cannot be updated within database.', $timeStamp, time());
+		return new ModelResponse(null, 0, 0, null, true, 'E:D:004', 'One or more entities cannot be updated within database.', $timeStamp, microtime(true));
 	}
 
 	/**
@@ -734,12 +734,12 @@ class AddressManagementModel extends CoreModel {
 	 */
 	public function insertAddressTypeLocalizations(array $collection)
 	{
-		$timeStamp = time();
+		$timeStamp = microtime(true);
 		if (!is_array($collection)) {
 			return $this->createException('InvalidParameterValueException', 'Invalid parameter value. Parameter must be an array collection', 'E:S:001');
 		}
 		$countInserts = 0;
-		$insertedItems = array();
+		$insertedItems = [];
 		foreach ($collection as $data) {
 			if ($data instanceof BundleEntity\AddressTypeLocalization) {
 				$entity = $data;
@@ -777,9 +777,9 @@ class AddressManagementModel extends CoreModel {
 		}
 		if ($countInserts > 0) {
 			$this->em->flush();
-			return new ModelResponse($insertedItems, $countInserts, 0, null, false, 'S:D:003', 'Selected entries have been successfully inserted into database.', $timeStamp, time());
+			return new ModelResponse($insertedItems, $countInserts, 0, null, false, 'S:D:003', 'Selected entries have been successfully inserted into database.', $timeStamp, microtime(true));
 		}
-		return new ModelResponse(null, 0, 0, null, true, 'E:D:003', 'One or more entities cannot be inserted into database.', $timeStamp, time());
+		return new ModelResponse(null, 0, 0, null, true, 'E:D:003', 'One or more entities cannot be inserted into database.', $timeStamp, microtime(true));
 	}
 
 	/**
@@ -790,7 +790,7 @@ class AddressManagementModel extends CoreModel {
 	 * @return \BiberLtd\Bundle\AddressManagementBundle\Services\ModelResponse|bool
 	 */
 	public function isAddressAssociatedWithMember($address, $member, $bypass = false){
-		$timeStamp = time();
+		$timeStamp = microtime(true);
 		$response = $this->getAddress($address);
 		if ($response->error->exist) {
 			return $response;
@@ -819,7 +819,7 @@ class AddressManagementModel extends CoreModel {
 		if ($bypass) {
 			return $found;
 		}
-		return new ModelResponse($found, 1, 0, null, false, 'S:D:002', 'Entries successfully fetched from database.', $timeStamp, time());
+		return new ModelResponse($found, 1, 0, null, false, 'S:D:002', 'Entries successfully fetched from database.', $timeStamp, microtime(true));
 	}
 
 	/**
@@ -830,8 +830,8 @@ class AddressManagementModel extends CoreModel {
 	 */
 	public function addPhoneNumbersToAddress(array $collection, $address)
 	{
-		$timeStamp = time();
-		$validAttributes = array();
+		$timeStamp = microtime(true);
+		$validAttributes = [];
 		$response = $this->getAddress($address);
 		if ($response->error->exist) {
 			return $response;
@@ -851,7 +851,7 @@ class AddressManagementModel extends CoreModel {
 		}
 		unset($count);
 
-		$poaCcollection = array();
+		$poaCcollection = [];
 		$count = 0;
 		$now = new \DateTime('now', new \DateTimezone($this->kernel->getContainer()->getParameter('app_timezone')));
 		foreach ($validAttributes as $item) {
@@ -866,9 +866,9 @@ class AddressManagementModel extends CoreModel {
 		}
 		if ($count > 0) {
 			$this->em->flush();
-			return new ModelResponse($poaCcollection, $count, 0, null, false, 'S:D:003', 'Selected entries have been successfully inserted into database.', $timeStamp, time());
+			return new ModelResponse($poaCcollection, $count, 0, null, false, 'S:D:003', 'Selected entries have been successfully inserted into database.', $timeStamp, microtime(true));
 		}
-		return new ModelResponse(null, 0, 0, null, true, 'E:D:003', 'One or more entities cannot be inserted into database.', $timeStamp, time());
+		return new ModelResponse(null, 0, 0, null, true, 'E:D:003', 'One or more entities cannot be inserted into database.', $timeStamp, microtime(true));
 	}
 
 	/**
@@ -907,7 +907,7 @@ class AddressManagementModel extends CoreModel {
 	 * @return \BiberLtd\Bundle\AddressManagementBundle\Services\ModelResponse|bool
 	 */
 	public function isPhoneAssociatedWithAddress($phone, $address, $bypass = false){
-		$timeStamp = time();
+		$timeStamp = microtime(true);
 		$response = $this->getAddress($address);
 		if ($response->error->exist) {
 			return $response;
@@ -936,7 +936,7 @@ class AddressManagementModel extends CoreModel {
 		if ($bypass) {
 			return $found;
 		}
-		return new ModelResponse($found, 1, 0, null, false, 'S:D:002', 'Entries successfully fetched from database.', $timeStamp, time());
+		return new ModelResponse($found, 1, 0, null, false, 'S:D:002', 'Entries successfully fetched from database.', $timeStamp, microtime(true));
 	}
 
 	/**

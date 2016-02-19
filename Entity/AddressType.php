@@ -76,7 +76,7 @@ class AddressType extends CoreLocalizableEntity
 	 *
 	 * @return $this
 	 */
-    public function setCode(\string $code) {
+    public function setCode(string $code) {
         if(!$this->setModified('code', $code)->isModified()) {
             return $this;
         }
