@@ -973,7 +973,7 @@ class AddressManagementModel extends CoreModel {
 	 *
 	 * @return \BiberLtd\Bundle\CoreBundle\Responses\ModelResponse
 	 */
-	public function listAddressesWitkKeywordMatchingInTitle(string $keyword, array $sortOrder = null, array $limit = null){
+	public function listAddressesWithKeywordMatchingInTitle(string $keyword, array $sortOrder = null, array $limit = null){
 		$filter[] = array(
 			'glue' => 'or',
 			'condition' => array('column' => $this->entity['a']['alias'].'.title', 'comparison' => 'contains', 'value' => $keyword),
