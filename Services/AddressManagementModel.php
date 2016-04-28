@@ -38,7 +38,7 @@ class AddressManagementModel extends CoreModel {
             'at' => array('name' => 'AddressManagementBundle:AddressType', 'alias' => 'at'),
             'atl' => array('name' => 'AddressManagementBundle:AddressTypeLocalization', 'alias' => 'atl'),
             'aom' => array('name' => 'AddressManagementBundle:AddressesOfMember', 'alias' => 'aom'),
-            'aom' => array('name' => 'MemberManagementBundle:Member', 'alias' => 'm'),
+            'm' => array('name' => 'MemberManagementBundle:Member', 'alias' => 'm'),
             'p' => array('name' => 'ContactInformationBundle:PhoneNumber', 'alias' => 'p'),
             'poa' => array('name' => 'AddressManagementBundle:PhoneNumbersOfAddresses', 'alias' => 'poa'),
         );
