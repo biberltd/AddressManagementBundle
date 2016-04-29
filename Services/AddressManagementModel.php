@@ -415,7 +415,7 @@ class AddressManagementModel extends CoreModel {
 		$oStr = $wStr = $gStr = $fStr = '';
 
 		$qStr = 'SELECT ' . $this->entity['a']['alias']
-			. ' FROM ' . $this->entity['a']['name'];
+			. ' FROM ' . $this->entity['a']['name'].' '.$this->entity['a']['alias'];
 
 		if (!is_null($sortOrder)) {
 			foreach ($sortOrder as $column => $direction) {
@@ -859,8 +859,8 @@ class AddressManagementModel extends CoreModel {
 			if (!$this->isPhoneAssociatedWithAddress($item, $address, true)) {
 				$poa = new BundleEntity\PhoneNumbersOfAddresses();
 				$poa->setAddress($address)->setPhoneNumber($item)->setDateAdded($now);
-				$this->em->persist($aop);
-				$poaCcollection[] = $aop;
+				$this->em->persist($poa);
+				$poaCcollection[] = $poa;
 				$count++;
 			}
 		}
@@ -879,14 +879,36 @@ class AddressManagementModel extends CoreModel {
 	 * @return mixed
 	 */
 	public function listAddressesOfMember($member, array $sortOrder = null, array $limit = null){
+		$timeStamp = microtime(true);
 		$mModel = $this->kernel->getContainer()->get('membermanagement.model');
 		$response = $mModel->getMember($member);
 		if ($response->error->exist) {
 			return $response;
 		}
 		$member = $response->result->set;
-		$column = $this->entity['m']['alias'] . '.member';
-		$condition = array('column' => $column, 'comparison' => '=', 'value' => $member->getId());
+
+		$qStr = 'SELECT '.$this->entity['aom']['alias'].' FROM '.$this->entity['aom']['name'].' '.$this->entity['aom']['alias']
+			. ' WHERE ' . $this->entity['aom']['alias'] . '.member = ' . $member->getId();
+
+
+		$q = $this->em->createQuery($qStr);
+		$q = $this->addLimit($q, $limit);
+		$result = $q->getResult();
+
+		$aIds = [];
+		if(count($result) < 0) {
+			return new ModelResponse(null, 0, 0, null, true, 'E:D:002', 'No entries found in database that matches to your criterion.', $timeStamp, microtime(true));
+		}
+
+		foreach($result as $aomEntity){
+			/**
+			 * @var BundleEntity\AddressesOfMember $aomEntity
+			 */
+			$aIds[] = $aomEntity->getAddress()->getId();
+		}
+
+		$column = $this->entity['a']['alias'] . '.id';
+		$condition = array('column' => $column, 'comparison' => 'in', 'value' => $aIds);
 		$filter[] = array(
 			'glue' => 'and',
 			'condition' => array(
