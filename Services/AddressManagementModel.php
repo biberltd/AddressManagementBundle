@@ -445,20 +445,12 @@ class AddressManagementModel extends CoreModel {
 		$q = $this->addLimit($q, $limit);
 
 		$result = $q->getResult();
-
-		$entities = [];
-		foreach ($result as $entry) {
-			$id = $entry->getProduct()->getId();
-			if (!isset($unique[$id])) {
-				$unique[$id] = '';
-				$entities[] = $entry->getProduct();
-			}
-		}
-		$totalRows = count($entities);
+		
+		$totalRows = count($result);
 		if ($totalRows < 1) {
 			return new ModelResponse(null, 0, 0, null, true, 'E:D:002', 'No entries found in database that matches to your criterion.', $timeStamp, microtime(true));
 		}
-		return new ModelResponse($entities, $totalRows, 0, null, false, 'S:D:002', 'Entries successfully fetched from database.', $timeStamp, microtime(true));
+		return new ModelResponse($result, $totalRows, 0, null, false, 'S:D:002', 'Entries successfully fetched from database.', $timeStamp, microtime(true));
 	}
 
 	/**
