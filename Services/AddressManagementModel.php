@@ -888,7 +888,7 @@ class AddressManagementModel extends CoreModel {
 		$member = $response->result->set;
 
 		$qStr = 'SELECT '.$this->entity['aom']['alias'].' FROM '.$this->entity['aom']['name'].' '.$this->entity['aom']['alias']
-			. ' WHERE ' . $this->entity['aom']['alias'] . '.member = ' . $member->getId();
+			. ' WHERE ' . $this->entity['aom']['alias'] . '.member = '. $member->getId();
 
 
 		$q = $this->em->createQuery($qStr);
@@ -896,7 +896,7 @@ class AddressManagementModel extends CoreModel {
 		$result = $q->getResult();
 
 		$aIds = [];
-		if(count($result) < 0) {
+		if(count($result) < 1) {
 			return new ModelResponse(null, 0, 0, null, true, 'E:D:002', 'No entries found in database that matches to your criterion.', $timeStamp, microtime(true));
 		}
 
