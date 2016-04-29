@@ -11,6 +11,7 @@
 namespace BiberLtd\Bundle\AddressManagementBundle\Services;
 
 use BiberLtd\Bundle\AddressManagementBundle\Entity as BundleEntity;
+use BiberLtd\Bundle\CoreBundle\Responses\ModelResponse;
 use BiberLtd\Bundle\MemberManagementBundle\Entity as MemberEntity;
 use BiberLtd\Bundle\ContactInformationBundle\Entity as ContactEntity;
 
