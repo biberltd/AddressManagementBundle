@@ -9,6 +9,7 @@
  * @date        10.12.2015
  */
 namespace BiberLtd\Bundle\AddressManagementBundle\Entity;
+use BiberLtd\Bundle\SiteManagementBundle\Entity\Site;
 use Doctrine\ORM\Mapping AS ORM;
 use BiberLtd\Bundle\CoreBundle\CoreEntity;
 /** 
@@ -99,7 +100,7 @@ class Address extends CoreEntity
      */
     private $city;
 
-    /** 
+    /**
      * @var
      * @ORM\ManyToOne(targetEntity="BiberLtd\Bundle\LocationManagementBundle\Entity\State")
      * @ORM\JoinColumn(name="state", referencedColumnName="id", onDelete="CASCADE") \BiberLtd\Bundle\LocationManagementBundle\Entity\State
@@ -294,10 +295,10 @@ class Address extends CoreEntity
     }
 
     /**
-     * @return \BiberLtd\Bundle\LocationManagementBundle\Entity\Country
+     * @return \BiberLtd\Bundle\LocationManagementBundle\Entity\Neighborhood
      */
     public function getNeighborhood(){
-        return $this->country;
+        return $this->neighborhood;
     }
 
     /**
@@ -320,4 +321,26 @@ class Address extends CoreEntity
     public function getDistrict(){
         return $this->district;
     }
+
+    /**
+     * @return \BiberLtd\Bundle\SiteManagementBundle\Entity\Site
+     */
+    public function getSite()
+    {
+        return $this->site;
+    }
+
+    /**
+     * @param Site $site
+     * @return $this
+     */
+    public function setSite(Site $site)
+    {
+        if (!$this->setModified('site', $site)->isModified()) {
+            return $this;
+        }
+        $this->site = $site;
+        return $this;
+    }
+
 }
