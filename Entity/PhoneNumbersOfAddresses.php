@@ -29,10 +29,7 @@ class PhoneNumbersOfAddresses extends CoreEntity{
     private $phone;
 
     /**
-     * @ORM\ManyToOne(
-     *     targetEntity="BiberLtd\Bundle\AddressManagementBundle\Entity\Address",
-     *     inversedBy="phoneNumbersOfAddresses"
-     * )
+     * @ORM\ManyToOne(targetEntity="Address", inversedBy="phoneNumbersOfAddresses")
      * @ORM\JoinColumn(name="address", referencedColumnName="id", nullable=false)
      * @ORM\Id
      * @var \BiberLtd\Bundle\AddressManagementBundle\Entity\Address

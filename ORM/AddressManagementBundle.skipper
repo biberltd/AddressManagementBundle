@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<skipper version="3.2.5.1283" mvc="Symfony2" orm="Doctrine2" name="AddressManagementBundle" uuid="74bebc7d-6bd7-46f9-abc6-a0accff74caf">
+<skipper version="3.2.6.1309" mvc="Symfony2" orm="Doctrine2" name="AddressManagementBundle" uuid="74bebc7d-6bd7-46f9-abc6-a0accff74caf">
   <module name="\SiteManagementBundle" local-name="SiteManagementBundle" namespace="\BiberLtd\Bundle\SiteManagementBundle\Entity" local-namespace="BiberLtd\Bundle\SiteManagementBundle\Entity" export-format="Doctrine2Php" export-path="../../site-management-bundle/Entity" uuid="860bb986-ef71-4cef-9da2-f560e58c2569">
     <entity name="\BiberLtd\Bundle\SiteManagementBundle\Entity\DomainAliases" local-name="DomainAliases" namespace="\BiberLtd\Bundle\SiteManagementBundle\Entity" description="Holds a list of alternative domains that the site will be served in." uuid="04602777-d7d4-4b5f-9557-c3a1ba1f9dbb">
       <field name="domain" description="Alias - domain. i.e. biberltd.com" type="text" required="true" unique="true" primary="true" uuid="766b4e3f-328f-4708-a9ff-d82d177d7e5c"/>
@@ -778,9 +778,6 @@
       <field name="title" description="Title of address; i.e. home" type="string" size="150" uuid="b9dc6ea7-1ea8-4618-a731-f060a82f9ba0"/>
       <field name="address" description="Street address." type="string" size="255" required="true" uuid="21f2fcc7-5a5b-4cc8-8051-864d9e8423b5"/>
       <field name="zip" description="Zip / postal code." type="string" size="20" uuid="5f2a97b1-6d95-490f-8308-53aad4ce4b6c"/>
-      <field name="city" description="City of address." type="integer" size="10" required="true" uuid="e846e9f9-d04d-424c-a399-b266cc194f9b"/>
-      <field name="state" description="State of address." type="integer" size="10" uuid="189a6889-67d5-4271-9d5b-2104b43dad15"/>
-      <field name="country" description="Country of address." type="integer" size="10" required="true" uuid="ce6e6abd-c92f-4eef-92cf-db31c628d6f1"/>
       <field name="site" description="Site that address belongs to." type="integer" size="10" required="true" uuid="b4d93710-bc36-48ce-a473-a0e6f06c22f7"/>
       <field name="nr" description="Door number if available." type="string" size="5" uuid="28e4a5de-1ee3-4aa6-8740-f0078a5f843b"/>
       <field name="date_added" description="Date when the entry is first added." type="datetime" required="true" uuid="f8e98ce0-b811-4c21-9e25-63c5db81bbaa"/>
@@ -788,15 +785,15 @@
       <field name="date_removed" description="Date when the entry is removed." type="datetime" uuid="009ae227-a11f-4db5-8d25-f968b902efe2"/>
       <field name="neighborhood" description="Neighborhood of Address." type="integer" unsigned="true" uuid="e46a2716-e082-4805-9b9c-4f75d9d62b68"/>
       <field name="district" description="District of address." type="integer" unsigned="true" uuid="09ae8a20-8be2-4271-9917-75310fd5c61c"/>
+      <field name="city" description="City of address." type="integer" size="10" required="true" unsigned="true" uuid="e1aac363-981d-4f58-a8c7-5b2522fc0249"/>
+      <field name="state" description="State of address." type="integer" size="10" unsigned="true" uuid="40f3e277-0aeb-4b19-b663-ea744b2de781"/>
+      <field name="country" description="Country of address." type="integer" size="10" required="true" unsigned="true" uuid="53e094c6-f5e6-4d4b-884f-d758b3868b34"/>
       <index name="idx_u_address_id" unique="true">
         <index-field name="id"/>
       </index>
       <index name="idx_u_address_street_address" unique="true">
         <index-field name="address"/>
         <index-field name="zip"/>
-        <index-field name="city"/>
-        <index-field name="state"/>
-        <index-field name="country"/>
         <index-field name="site"/>
       </index>
       <index name="idx_n_address_date_added">
@@ -840,6 +837,24 @@
         <attribute name="on-delete">CASCADE</attribute>
         <attribute name="side-owning"/>
         <attribute name="side-inverse"/>
+      </orm-attributes>
+    </association>
+    <association from="\Address" to="\BiberLtd\Bundle\LocationManagementBundle\Entity\City" caption="idxFCityOfAddress" inverse-alias="city" many-owner="true" many-inverse="false" parent-required="true" uuid="f1113fda-971b-4e10-9f14-179b8d299663">
+      <association-field from="city" to="id"/>
+      <orm-attributes>
+        <attribute name="on-delete">CASCADE</attribute>
+      </orm-attributes>
+    </association>
+    <association from="\Address" to="\BiberLtd\Bundle\LocationManagementBundle\Entity\State" caption="idxFStateOfAddress" inverse-alias="state" many-owner="true" many-inverse="false" uuid="f15a8db5-9952-4b3a-8c41-3fbd0e916933">
+      <association-field from="state" to="id"/>
+      <orm-attributes>
+        <attribute name="on-delete">CASCADE</attribute>
+      </orm-attributes>
+    </association>
+    <association from="\Address" to="\BiberLtd\Bundle\LocationManagementBundle\Entity\Country" caption="idxFCountryOfAddress" inverse-alias="country" many-owner="true" many-inverse="false" parent-required="true" uuid="40d525c1-5fe4-4b44-9d60-b66593ec805c">
+      <association-field from="country" to="id"/>
+      <orm-attributes>
+        <attribute name="on-delete">CASCADE</attribute>
       </orm-attributes>
     </association>
     <entity name="\AddressesOfMember" local-name="AddressesOfMember" namespace="\" description="Associates members with addresses." uuid="02725dc2-9c02-4e28-b812-805789b32deb">
@@ -1510,7 +1525,7 @@
       <attribute name="file-suffix">without-suffix</attribute>
     </orm-attributes>
   </module>
-  <module name="\ContactInformationBundle" local-name="ContactInformationBundle" namespace="\BiberLtd\Bundle\ContactInformationBundle\Entity" local-namespace="BiberLtd\Bundle\ContactInformationBundle\Entity" description="This module holds dynamic contact information entries for each member; therefore it required MemberManagementModule." export-format="Doctrine2Php" export-path="../../contact-information-bundle/Entity" uuid="97332506-9332-437e-8cac-2067a914e319">
+  <module name="\ContactInformationBundle" local-name="ContactInformationBundle" namespace="\BiberLtd\Bundle\ContactInformationBundle\Entity" local-namespace="BiberLtd\Bundle\ContactInformationBundle\Entity" export-format="Doctrine2Php" export-path="../../contact-information-bundle/Entity" description="This module holds dynamic contact information entries for each member; therefore it required MemberManagementModule." uuid="97332506-9332-437e-8cac-2067a914e319">
     <entity name="\BiberLtd\Bundle\ContactInformationBundle\Entity\ContactInformationType" local-name="ContactInformationType" namespace="\BiberLtd\Bundle\ContactInformationBundle\Entity" description="Stores generic grouping thype of contact information such as home, work, emergency, etc." uuid="f639766f-c264-428c-a628-a585d591a35e">
       <field name="id" description="System given id." type="integer" size="5" required="true" unique="true" primary="true" auto-increment="true" uuid="cf89d10d-fac0-4211-bdba-98d34556ff9b">
         <orm-attributes>
@@ -1813,13 +1828,6 @@
       <attribute name="file-suffix">without-suffix</attribute>
     </orm-attributes>
   </module>
-  <module name="\../../site-management-bundle/Entity" local-name="../../site-management-bundle/Entity" namespace="\BiberLtd\Bundle\SiteManagementBundle\Entity" local-namespace="\BiberLtd\Bundle\SiteManagementBundle\Entity" export-format="Doctrine2Php" export-path="../../site-management-bundle/Entity" uuid="cc474b57-5042-4270-9894-0dbd5a5f5f21"/>
-  <module name="\../../multilanguage-support-bundle/Entity" local-name="../../multilanguage-support-bundle/Entity" namespace="\BiberLtd\Bundle\MultiLanguageSupportBundle\Entity" local-namespace="\BiberLtd\Bundle\MultiLanguageSupportBundle\Entity" export-format="Doctrine2Php" export-path="../../multilanguage-support-bundle/Entity" uuid="b7d3a6fb-105f-4041-adbc-9fc15c06ef4c"/>
-  <module name="\../../file-management-bundle/Entity" local-name="../../file-management-bundle/Entity" namespace="\BiberLtd\Bundle\FileManagementBundle\Entity" local-namespace="\BiberLtd\Bundle\FileManagementBundle\Entity" export-format="Doctrine2Php" export-path="../../file-management-bundle/Entity" uuid="33543ddc-62bf-4bc4-9222-ced8f38ace71"/>
-  <module name="\../../member-management-bundle/Entity" local-name="../../member-management-bundle/Entity" namespace="\BiberLtd\Bundle\MemberManagementBundle\Entity" local-namespace="\BiberLtd\Bundle\MemberManagementBundle\Entity" export-format="Doctrine2Php" export-path="../../member-management-bundle/Entity" uuid="538a90ac-71aa-4ce5-9245-b9b8064a7bfa"/>
-  <module name="\../Entity" local-name="../Entity" namespace="\BiberLtd\Bundle\AddressManagementBundle\Entity" local-namespace="\BiberLtd\Bundle\AddressManagementBundle\Entity" export-format="Doctrine2Php" export-path="../Entity" uuid="dee1192e-74df-4cfd-9391-e4b5eafe06c8"/>
-  <module name="\../../location-management-bundle/Entity" local-name="../../location-management-bundle/Entity" namespace="\BiberLtd\Bundle\LocationManagementBundle\Entity" local-namespace="\BiberLtd\Bundle\LocationManagementBundle\Entity" export-format="Doctrine2Php" export-path="../../location-management-bundle/Entity" uuid="c3088f49-cb08-444a-a8df-497015532357"/>
-  <module name="\../../contact-information-bundle/Entity" local-name="../../contact-information-bundle/Entity" namespace="\BiberLtd\Bundle\ContactInformationBundle\Entity" local-namespace="\BiberLtd\Bundle\ContactInformationBundle\Entity" export-format="Doctrine2Php" export-path="../../contact-information-bundle/Entity" uuid="95be6b06-9b48-4119-93a7-49d420dc3596"/>
   <visual-data>
     <association uuid="0132b5a4-c206-4f06-bcf7-08bf61d249f3" color="#969696"/>
     <association uuid="02202d4e-2d98-49bd-8aa5-72ec7f7b2be8" color="#969696"/>
@@ -1838,6 +1846,7 @@
     <association uuid="2e4f0dea-aac2-4ae5-87af-a4c72c508194" color="#969696"/>
     <association uuid="2f81a417-cf2d-4522-9d43-3b4dcb9ff53f" color="#969696"/>
     <association uuid="3c94edba-45c5-469c-8399-530c323f97ad" color="#969696"/>
+    <association uuid="40d525c1-5fe4-4b44-9d60-b66593ec805c" color="#969696"/>
     <association uuid="45c125cd-0ba3-4a9c-973e-92bbcfb91a59" color="#969696"/>
     <association uuid="46fee6f5-f1a9-4e3f-b9e5-96d1665cb877" color="#969696"/>
     <association uuid="49bba62e-cacd-41b0-94ed-1ce65f89d961" color="#969696"/>
@@ -1879,6 +1888,8 @@
     <association uuid="ed9d8b73-567a-4c72-b53d-e1e2df7ed7b4" color="#969696"/>
     <association uuid="ee3bb328-1cc0-47c2-8c6c-6662d43d08fb" color="#969696"/>
     <association uuid="ef6244f7-cb2a-479e-b094-83ebd0925b84" color="#969696"/>
+    <association uuid="f1113fda-971b-4e10-9f14-179b8d299663" color="#969696"/>
+    <association uuid="f15a8db5-9952-4b3a-8c41-3fbd0e916933" color="#969696"/>
     <association uuid="f1775d07-f9b2-4951-a294-d19053c62b80" color="#969696"/>
     <association uuid="f1ffb8dc-1046-4888-9407-7531255ace0c" color="#969696"/>
     <association uuid="f4b0d82d-96f6-49e4-b213-9292f3fa75bd" color="#969696"/>
@@ -1924,18 +1935,11 @@
     <entity uuid="f647863e-4edf-41a2-998c-1facc78fba85" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="350" position-y="68" size-x="0" size-x2="130" size-y="0" size-y2="115"/>
     <module uuid="116d2750-ee5f-4537-84d5-7d45771499d3" bg-color="#C70000" position-x="4470" position-y="60" size-x="20" size-x2="1039" size-y="10" size-y2="609"/>
     <module uuid="264804cf-5ddd-4089-aaa2-d7c0f129a5ed" bg-color="#FDF5F3" position-x="971" position-y="106" size-x="0" size-x2="700" size-y="56" size-y2="417"/>
-    <module uuid="33543ddc-62bf-4bc4-9222-ced8f38ace71" bg-color="#EAE4F1" position-x="6670" position-y="250" size-x="0" size-x2="100" size-y="0" size-y2="100"/>
-    <module uuid="538a90ac-71aa-4ce5-9245-b9b8064a7bfa" bg-color="#E7F5FD" position-x="6670" position-y="450" size-x="0" size-x2="100" size-y="0" size-y2="100"/>
     <module uuid="7108c533-7a5c-41ae-be79-0b9b4bbacc81" bg-color="#099F8D" position-x="5600" position-y="50" size-x="0" size-x2="770" size-y="0" size-y2="570"/>
     <module uuid="860bb986-ef71-4cef-9da2-f560e58c2569" bg-color="#7E7975" position-x="381" position-y="50" size-x="0" size-x2="490" size-y="0" size-y2="327"/>
-    <module uuid="95be6b06-9b48-4119-93a7-49d420dc3596" bg-color="#FEEFE3" position-x="7070" position-y="650" size-x="0" size-x2="100" size-y="0" size-y2="100"/>
     <module uuid="97332506-9332-437e-8cac-2067a914e319" bg-color="#D3F2A9" position-x="3450" position-y="82" size-x="0" size-x2="908" size-y="32" size-y2="679"/>
     <module uuid="9d574194-22af-4673-a2ee-bb67ec7d212e" bg-color="#C70000" position-x="1797" position-y="51" size-x="26" size-x2="695" size-y="1" size-y2="487"/>
-    <module uuid="b7d3a6fb-105f-4041-adbc-9fc15c06ef4c" bg-color="#FDEBEF" position-x="6470" position-y="250" size-x="0" size-x2="100" size-y="0" size-y2="100"/>
-    <module uuid="c3088f49-cb08-444a-a8df-497015532357" bg-color="#FEFCE8" position-x="6870" position-y="650" size-x="0" size-x2="100" size-y="0" size-y2="100"/>
-    <module uuid="cc474b57-5042-4270-9894-0dbd5a5f5f21" bg-color="#FEEFE3" position-x="6470" position-y="50" size-x="0" size-x2="100" size-y="0" size-y2="100"/>
     <module uuid="d40aa0eb-3691-4818-880c-0a9ad1dd9833" bg-color="#C70000" position-x="2592" position-y="99" size-x="0" size-x2="800" size-y="49" size-y2="559"/>
-    <module uuid="dee1192e-74df-4cfd-9391-e4b5eafe06c8" bg-color="#E7F3E7" position-x="6870" position-y="450" size-x="0" size-x2="100" size-y="0" size-y2="100"/>
     <project uuid="74bebc7d-6bd7-46f9-abc6-a0accff74caf" size-x="0" size-x2="7220" size-y="0" size-y2="811"/>
   </visual-data>
 </skipper>

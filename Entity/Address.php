@@ -23,7 +23,7 @@ use BiberLtd\Bundle\CoreBundle\CoreEntity;
  *     },
  *     uniqueConstraints={
  *         @ORM\UniqueConstraint(name="idx_u_address_id", columns={"id"}),
- *         @ORM\UniqueConstraint(name="idx_u_address_street_address", columns={"address","zip","city","state","country","site"})
+ *         @ORM\UniqueConstraint(name="idx_u_address_street_address", columns={"address","zip","site"})
  *     }
  * )
  */
@@ -62,10 +62,7 @@ class Address extends CoreEntity
     public $date_removed;
 
     /**
-     * @ORM\OneToMany(
-     *     targetEntity="BiberLtd\Bundle\AddressManagementBundle\Entity\PhoneNumbersOfAddresses",
-     *     mappedBy="address"
-     * )
+     * @ORM\OneToMany(targetEntity="PhoneNumbersOfAddresses", mappedBy="address")
      * @var array
      */
     private $phoneNumbersOfAddresses;
@@ -88,24 +85,24 @@ class Address extends CoreEntity
      */
     private $nr;
 
-    /** 
-     * 
-     * @ORM\Column(type="integer", length=10, nullable=false)
-     * @var \BiberLtd\Bundle\LocationManagementBundle\Entity\Country
+    /**
+     * @var
+     * @ORM\ManyToOne(targetEntity="BiberLtd\Bundle\LocationManagementBundle\Entity\Country")
+     * @ORM\JoinColumn(name="country", referencedColumnName="id", nullable=false, onDelete="CASCADE") \BiberLtd\Bundle\LocationManagementBundle\Entity\Country
      */
     private $country;
 
-    /** 
-     * 
-     * @ORM\Column(type="integer", length=10, nullable=false)
-     * @var \BiberLtd\Bundle\LocationManagementBundle\Entity\City
+    /**
+     * @var
+     * @ORM\ManyToOne(targetEntity="BiberLtd\Bundle\LocationManagementBundle\Entity\City")
+     * @ORM\JoinColumn(name="city", referencedColumnName="id", nullable=false, onDelete="CASCADE") \BiberLtd\Bundle\LocationManagementBundle\Entity\City
      */
     private $city;
 
     /** 
-     * 
-     * @ORM\Column(type="integer", length=10, nullable=true)
-     * @var \BiberLtd\Bundle\LocationManagementBundle\Entity\State
+     * @var
+     * @ORM\ManyToOne(targetEntity="BiberLtd\Bundle\LocationManagementBundle\Entity\State")
+     * @ORM\JoinColumn(name="state", referencedColumnName="id", onDelete="CASCADE") \BiberLtd\Bundle\LocationManagementBundle\Entity\State
      */
     private $state;
 
@@ -117,10 +114,7 @@ class Address extends CoreEntity
     private $site;
 
     /**
-     * @ORM\ManyToOne(
-     *     targetEntity="BiberLtd\Bundle\LocationManagementBundle\Entity\Neighborhood",
-     *     inversedBy="address"
-     * )
+     * @ORM\ManyToOne(targetEntity="BiberLtd\Bundle\LocationManagementBundle\Entity\Neighborhood")
      * @ORM\JoinColumn(name="neighborhood", referencedColumnName="id", onDelete="CASCADE")
      * @var \BiberLtd\Bundle\LocationManagementBundle\Entity\Neighborhood
      */

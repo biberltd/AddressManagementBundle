@@ -42,10 +42,7 @@ class AddressTypeLocalization extends CoreEntity
 
     /** 
      * @ORM\Id
-     * @ORM\ManyToOne(
-     *     targetEntity="BiberLtd\Bundle\AddressManagementBundle\Entity\AddressType",
-     *     inversedBy="localizations"
-     * )
+     * @ORM\ManyToOne(targetEntity="AddressType", inversedBy="localizations")
      * @ORM\JoinColumn(name="address_type", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * @var \BiberLtd\Bundle\AddressManagementBundle\Entity\AddressType
      */

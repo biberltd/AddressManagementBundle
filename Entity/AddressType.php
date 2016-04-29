@@ -63,10 +63,7 @@ class AddressType extends CoreLocalizableEntity
     public $date_removed;
 
     /**
-     * @ORM\OneToMany(
-     *     targetEntity="BiberLtd\Bundle\AddressManagementBundle\Entity\AddressTypeLocalization",
-     *     mappedBy="address_type"
-     * )
+     * @ORM\OneToMany(targetEntity="AddressTypeLocalization", mappedBy="address_type")
      * @var array
      */
     protected $localizations;

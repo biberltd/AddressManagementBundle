@@ -59,7 +59,7 @@ class AddressesOfMember extends CoreEntity
 
     /** 
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="BiberLtd\Bundle\AddressManagementBundle\Entity\Address")
+     * @ORM\ManyToOne(targetEntity="Address")
      * @ORM\JoinColumn(name="address", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * @var \BiberLtd\Bundle\AddressManagementBundle\Entity\Address
      */
@@ -74,7 +74,7 @@ class AddressesOfMember extends CoreEntity
     private $member;
 
     /**
-     * @ORM\ManyToOne(targetEntity="BiberLtd\Bundle\AddressManagementBundle\Entity\AddressType")
+     * @ORM\ManyToOne(targetEntity="AddressType")
      * @ORM\JoinColumn(name="type", referencedColumnName="id", nullable=false)
      * @var \BiberLtd\Bundle\AddressManagementBundle\Entity\AddressType
      */
