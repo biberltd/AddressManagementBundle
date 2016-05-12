@@ -12,7 +12,7 @@ namespace BiberLtd\Bundle\AddressManagementBundle\Entity;
 use BiberLtd\Bundle\CoreBundle\CoreEntity;
 use Doctrine\ORM\Mapping AS ORM;
 
-/** 
+/**
  * @ORM\Entity
  * @ORM\Table(
  *     name="addresses_of_member",
@@ -27,47 +27,47 @@ use Doctrine\ORM\Mapping AS ORM;
  */
 class AddressesOfMember extends CoreEntity
 {
-    /** 
+    /**
      * @ORM\Column(type="string", length=155, nullable=false)
      * @var string
      */
     private $description;
 
-    /** 
+    /**
      * @ORM\Column(type="text", nullable=true)
      * @var string
      */
     private $alias;
 
-    /** 
+    /**
      * @ORM\Column(type="datetime", nullable=false)
      * @var \DateTime
      */
     public $date_added;
 
-    /** 
+    /**
      * @ORM\Column(type="datetime", nullable=false)
      * @var \DateTime
      */
     public $date_updated;
 
-    /** 
+    /**
      * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime
      */
     public $date_removed;
 
-    /** 
+    /**
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="Address")
+     * @ORM\ManyToOne(targetEntity="Address", cascade={"persist"})
      * @ORM\JoinColumn(name="address", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * @var \BiberLtd\Bundle\AddressManagementBundle\Entity\Address
      */
     private $address;
 
-    /** 
+    /**
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="BiberLtd\Bundle\MemberManagementBundle\Entity\Member")
+     * @ORM\ManyToOne(targetEntity="BiberLtd\Bundle\MemberManagementBundle\Entity\Member", cascade={"persist"})
      * @ORM\JoinColumn(name="member", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * @var \BiberLtd\Bundle\MemberManagementBundle\Entity\Member
      */
@@ -80,118 +80,115 @@ class AddressesOfMember extends CoreEntity
      */
     private $address_type;
 
-	/**
-	 * @param \BiberLtd\Bundle\AddressManagementBundle\Entity\Address $address
-	 *
-	 * @return $this
-	 */
+    /**
+     * @param \BiberLtd\Bundle\AddressManagementBundle\Entity\Address $address
+     *
+     * @return $this
+     */
     public function setAddress(\BiberLtd\Bundle\AddressManagementBundle\Entity\Address $address) {
         if(!$this->setModified('address', $address)->isModified()) {
             return $this;
         }
         $this->address = $address;
-		return $this;
+        return $this;
     }
 
-	/**
-	 * @return \BiberLtd\Bundle\AddressManagementBundle\Entity\Address
-	 */
+    /**
+     * @return \BiberLtd\Bundle\AddressManagementBundle\Entity\Address
+     */
     public function getAddress() {
         return $this->address;
     }
 
-	/**
-	 * @param \BiberLtd\Bundle\AddressManagementBundle\Entity\AddressType $type
-	 *
-	 * @return $this
-	 */
-    public function setAddressType(\BiberLtd\Bundle\AddressManagementBundle\Entity\AddressType $type) {
+    /**
+     * @param AddressType|null $type
+     * @return $this
+     */
+    public function setAddressType(\BiberLtd\Bundle\AddressManagementBundle\Entity\AddressType $type = null) {
         if(!$this->setModified('type', $type)->isModified()) {
             return $this;
         }
         $this->type = $type;
-		return $this;
+        return $this;
     }
 
-	/**
-	 * @param \BiberLtd\Bundle\AddressManagementBundle\Entity\AddressType $type
-	 *
-	 * @return \BiberLtd\Bundle\AddressManagementBundle\Entity\AddressesOfMember
-	 */
-	public function setType(\BiberLtd\Bundle\AddressManagementBundle\Entity\AddressType $type) {
-		return $this->setAddressType($type);
-	}
+    /**
+     * @param AddressType|null $type
+     * @return AddressesOfMember
+     */
+    public function setType(\BiberLtd\Bundle\AddressManagementBundle\Entity\AddressType $type = null) {
+        return $this->setAddressType($type);
+    }
 
-	/**
-	 * @return \BiberLtd\Bundle\AddressManagementBundle\Entity\AddressType
-	 */
+    /**
+     * @return \BiberLtd\Bundle\AddressManagementBundle\Entity\AddressType
+     */
     public function getAddressType() {
         return $this->address_type;
     }
 
-	/**
-	 * @return \BiberLtd\Bundle\AddressManagementBundle\Entity\AddressType
-	 */
-	public function getType(){
-		return $this->getAddressType();
-	}
+    /**
+     * @return \BiberLtd\Bundle\AddressManagementBundle\Entity\AddressType
+     */
+    public function getType(){
+        return $this->getAddressType();
+    }
 
-	/**
-	 * @param string $alias
-	 *
-	 * @return $this
-	 */
-    public function setAlias(string $alias) {
+    /**
+     * @param string|null $alias
+     * @return $this
+     */
+    public function setAlias(string $alias = null) {
         if(!$this->setModified('alias', $alias)->isModified()) {
             return $this;
         }
         $this->alias = $alias;
-		return $this;
+        return $this;
     }
 
-	/**
-	 * @return string
-	 */
+    /**
+     * @return string
+     */
     public function getAlias() {
         return $this->alias;
     }
 
-	/**
-	 * @param string $description
-	 *
-	 * @return $this
-	 */
+    /**
+     * @param string $description
+     *
+     * @return $this
+     */
     public function setDescription(string $description) {
         if(!$this->setModified('description', $description)->isModified()) {
             return $this;
         }
         $this->description = $description;
-		return $this;
+        return $this;
     }
 
-	/**
-	 * @return string
-	 */
+    /**
+     * @return string
+     */
     public function getDescription() {
         return $this->description;
     }
 
-	/**
-	 * @param \BiberLtd\Bundle\MemberManagementBundle\Entity\Member $member
-	 *
-	 * @return $this
-	 */
+    /**
+     * @param \BiberLtd\Bundle\MemberManagementBundle\Entity\Member $member
+     *
+     * @return $this
+     */
     public function setMember(\BiberLtd\Bundle\MemberManagementBundle\Entity\Member $member) {
         if(!$this->setModified('member', $member)->isModified()) {
             return $this;
         }
         $this->member = $member;
-		return $this;
+        return $this;
     }
 
-	/**
-	 * @return \BiberLtd\Bundle\MemberManagementBundle\Entity\Member
-	 */
+    /**
+     * @return \BiberLtd\Bundle\MemberManagementBundle\Entity\Member
+     */
     public function getMember() {
         return $this->member;
     }

@@ -24,235 +24,235 @@ use BiberLtd\Bundle\CoreBundle\Exceptions as CoreExceptions;
 
 class AddressManagementModel extends CoreModel {
 
-    /**
-     * AddressManagementModel constructor.
-     *
-     * @param object $kernel
-     * @param string $db_connection
-     * @param string $orm
-     */
-    public function __construct($kernel, $db_connection = 'default', $orm = 'doctrine') {
-        parent::__construct($kernel, $db_connection, $orm);
+	/**
+	 * AddressManagementModel constructor.
+	 *
+	 * @param object $kernel
+	 * @param string $db_connection
+	 * @param string $orm
+	 */
+	public function __construct($kernel, $db_connection = 'default', $orm = 'doctrine') {
+		parent::__construct($kernel, $db_connection, $orm);
 
-        $this->entity = array(
-            'a' => array('name' => 'AddressManagementBundle:Address', 'alias' => 'a'),
-            'at' => array('name' => 'AddressManagementBundle:AddressType', 'alias' => 'at'),
-            'atl' => array('name' => 'AddressManagementBundle:AddressTypeLocalization', 'alias' => 'atl'),
-            'aom' => array('name' => 'AddressManagementBundle:AddressesOfMember', 'alias' => 'aom'),
-            'm' => array('name' => 'MemberManagementBundle:Member', 'alias' => 'm'),
-            'p' => array('name' => 'ContactInformationBundle:PhoneNumber', 'alias' => 'p'),
-            'poa' => array('name' => 'AddressManagementBundle:PhoneNumbersOfAddresses', 'alias' => 'poa'),
-        );
-    }
+		$this->entity = array(
+			'a' => array('name' => 'AddressManagementBundle:Address', 'alias' => 'a'),
+			'at' => array('name' => 'AddressManagementBundle:AddressType', 'alias' => 'at'),
+			'atl' => array('name' => 'AddressManagementBundle:AddressTypeLocalization', 'alias' => 'atl'),
+			'aom' => array('name' => 'AddressManagementBundle:AddressesOfMember', 'alias' => 'aom'),
+			'm' => array('name' => 'MemberManagementBundle:Member', 'alias' => 'm'),
+			'p' => array('name' => 'ContactInformationBundle:PhoneNumber', 'alias' => 'p'),
+			'poa' => array('name' => 'AddressManagementBundle:PhoneNumbersOfAddresses', 'alias' => 'poa'),
+		);
+	}
 
-    /**
-     * Destructor
-     */
-    public function __destruct() {
-        foreach ($this as $property => $value) {
-            $this->$property = null;
-        }
-    }
+	/**
+	 * Destructor
+	 */
+	public function __destruct() {
+		foreach ($this as $property => $value) {
+			$this->$property = null;
+		}
+	}
 
-    /**
-     * @param $entry
-     *
-     * @return array
-     */
-    public function deleteAddress($entry) {
-        return $this->deleteAddresses(array($entry));
-    }
+	/**
+	 * @param $entry
+	 *
+	 * @return array
+	 */
+	public function deleteAddress($entry) {
+		return $this->deleteAddresses(array($entry));
+	}
 
-    /**
-     * @param $collection
-     *
-     * @return array|\BiberLtd\Bundle\CoreBundle\Responses\ModelResponse
-     */
-    public function deleteAddresses($collection) {
-        $timeStamp = microtime(true);
-        if (!is_array($collection)) {
-            return $this->createException('InvalidParameterValueException', 'Invalid parameter value. Parameter must be an array collection', 'E:S:001');
-        }
-        $countDeleted = 0;
-        foreach ($collection as $entry) {
-            if ($entry instanceof BundleEntity\Address) {
-                $this->em->remove($entry);
-                $countDeleted++;
-            } else {
-                $response = $this->getAddress($entry);
-                if (!$response->error->exist) {
-                    $this->em->remove($response->result->set);
-                    $countDeleted++;
-                }
-            }
-        }
-        if ($countDeleted < 0) {
-            return new ModelResponse(null, 0, 0, null, true, 'E:E:001', 'Unable to delete all or some of the selected entries.', $timeStamp, microtime(true));
-        }
-        $this->em->flush();
-        return new ModelResponse(null, 0, 0, null, false, 'S:D:001', 'Selected entries have been successfully removed from database.', $timeStamp, microtime(true));
-    }
+	/**
+	 * @param $collection
+	 *
+	 * @return array|\BiberLtd\Bundle\CoreBundle\Responses\ModelResponse
+	 */
+	public function deleteAddresses($collection) {
+		$timeStamp = microtime(true);
+		if (!is_array($collection)) {
+			return $this->createException('InvalidParameterValueException', 'Invalid parameter value. Parameter must be an array collection', 'E:S:001');
+		}
+		$countDeleted = 0;
+		foreach ($collection as $entry) {
+			if ($entry instanceof BundleEntity\Address) {
+				$this->em->remove($entry);
+				$countDeleted++;
+			} else {
+				$response = $this->getAddress($entry);
+				if (!$response->error->exist) {
+					$this->em->remove($response->result->set);
+					$countDeleted++;
+				}
+			}
+		}
+		if ($countDeleted < 0) {
+			return new ModelResponse(null, 0, 0, null, true, 'E:E:001', 'Unable to delete all or some of the selected entries.', $timeStamp, microtime(true));
+		}
+		$this->em->flush();
+		return new ModelResponse(null, 0, 0, null, false, 'S:D:001', 'Selected entries have been successfully removed from database.', $timeStamp, microtime(true));
+	}
 
-    /**
-     * @param $entry
-     *
-     * @return array
-     */
-    public function deleteAddressType($entry) {
-        return $this->deleteAddressTypes(array($entry));
-    }
+	/**
+	 * @param $entry
+	 *
+	 * @return array
+	 */
+	public function deleteAddressType($entry) {
+		return $this->deleteAddressTypes(array($entry));
+	}
 
-    /**
-     * @param $collection
-     *
-     * @return \BiberLtd\Bundle\AddressManagementBundle\Services\ModelResponse|\BiberLtd\Bundle\CoreBundle\Responses\ModelResponse
-     */
-    public function deleteAddressTypes($collection) {
-        $timeStamp = microtime(true);
-        if (!is_array($collection)) {
-            return $this->createException('InvalidParameterValueException', 'Invalid parameter value. Parameter must be an array collection', 'E:S:001');
-        }
-        $countDeleted = 0;
-        foreach ($collection as $entry) {
-            if ($entry instanceof BundleEntity\AddressType) {
-                $this->em->remove($entry);
-                $countDeleted++;
-            } else {
-                $response = $this->getAddressType($entry);
-                if (!$response->error->exist) {
-                    $this->em->remove($response->result->set);
-                    $countDeleted++;
-                }
-            }
-        }
-        if ($countDeleted < 0) {
-            return new ModelResponse(null, 0, 0, null, true, 'E:E:001', 'Unable to delete all or some of the selected entries.', $timeStamp, microtime(true));
-        }
-        $this->em->flush();
-        return new ModelResponse(null, 0, 0, null, false, 'S:D:001', 'Selected entries have been successfully removed from database.', $timeStamp, microtime(true));
-    }
+	/**
+	 * @param $collection
+	 *
+	 * @return \BiberLtd\Bundle\AddressManagementBundle\Services\ModelResponse|\BiberLtd\Bundle\CoreBundle\Responses\ModelResponse
+	 */
+	public function deleteAddressTypes($collection) {
+		$timeStamp = microtime(true);
+		if (!is_array($collection)) {
+			return $this->createException('InvalidParameterValueException', 'Invalid parameter value. Parameter must be an array collection', 'E:S:001');
+		}
+		$countDeleted = 0;
+		foreach ($collection as $entry) {
+			if ($entry instanceof BundleEntity\AddressType) {
+				$this->em->remove($entry);
+				$countDeleted++;
+			} else {
+				$response = $this->getAddressType($entry);
+				if (!$response->error->exist) {
+					$this->em->remove($response->result->set);
+					$countDeleted++;
+				}
+			}
+		}
+		if ($countDeleted < 0) {
+			return new ModelResponse(null, 0, 0, null, true, 'E:E:001', 'Unable to delete all or some of the selected entries.', $timeStamp, microtime(true));
+		}
+		$this->em->flush();
+		return new ModelResponse(null, 0, 0, null, false, 'S:D:001', 'Selected entries have been successfully removed from database.', $timeStamp, microtime(true));
+	}
 
-    /**
-     * @param mixed$address
-     * @param bool $bypass
-     *
-     * @return bool
-     */
-    public function doesAddressExist($address, $bypass = false)
-    {
-        $response = $this->getAddress($address);
-        $exist = true;
-        if ($response->error->exist) {
-            $exist = false;
-            $response->result->set = false;
-        }
-        if ($bypass) {
-            return $exist;
-        }
-        return $response;
-    }
+	/**
+	 * @param mixed$address
+	 * @param bool $bypass
+	 *
+	 * @return bool
+	 */
+	public function doesAddressExist($address, $bypass = false)
+	{
+		$response = $this->getAddress($address);
+		$exist = true;
+		if ($response->error->exist) {
+			$exist = false;
+			$response->result->set = false;
+		}
+		if ($bypass) {
+			return $exist;
+		}
+		return $response;
+	}
 
-    /**
-     * @param mixed$address
-     * @param bool $bypass
-     *
-     * @return bool
-     */
-    public function doesAddressTypeExist($address, $bypass = false)
-    {
-        $response = $this->getAddressType($address);
-        $exist = true;
-        if ($response->error->exist) {
-            $exist = false;
-            $response->result->set = false;
-        }
-        if ($bypass) {
-            return $exist;
-        }
-        return $response;
-    }
+	/**
+	 * @param mixed$address
+	 * @param bool $bypass
+	 *
+	 * @return bool
+	 */
+	public function doesAddressTypeExist($address, $bypass = false)
+	{
+		$response = $this->getAddressType($address);
+		$exist = true;
+		if ($response->error->exist) {
+			$exist = false;
+			$response->result->set = false;
+		}
+		if ($bypass) {
+			return $exist;
+		}
+		return $response;
+	}
 
-    /**
-     * @param $collection
-     *
-     * @return array
-     */
-    public function insertAddressType($collection) {
-        return $this->insertAddressType(array($collection));
-    }
+	/**
+	 * @param $collection
+	 *
+	 * @return array
+	 */
+	public function insertAddressType($collection) {
+		return $this->insertAddressType(array($collection));
+	}
 
-    /**
-     * @param $collection
-     *
-     * @return \BiberLtd\Bundle\AddressManagementBundle\Services\ModelResponse|\BiberLtd\Bundle\CoreBundle\Responses\ModelResponse
-     */
-    public function insertAddressTypes($collection)
-    {
-        $timeStamp = microtime(true);
-        if (!is_array($collection)) {
-            return $this->createException('InvalidParameterValueException', 'Invalid parameter value. Parameter must be an array collection', 'E:S:001');
-        }
-        $countInserts = 0;
-        $countLocalizations = 0;
-        $insertedItems = [];
-        $localizations = [];
-        $now = new \DateTime('now', new \DateTimeZone($this->kernel->getContainer()->getParameter('app_timezone')));
-        foreach ($collection as $data) {
-            if ($data instanceof BundleEntity\AddressType) {
-                $entity = $data;
-                $this->em->persist($entity);
-                $insertedItems[] = $entity;
-                $countInserts++;
-            } else if (is_object($data)) {
-                $entity = new BundleEntity\ProductCategory;
-                if (!property_exists($data, 'date_added')) {
-                    $data->date_added = $now;
-                }
-                if (!property_exists($data, 'date_updated')) {
-                    $data->date_updated = $now;
-                }
-                foreach ($data as $column => $value) {
-                    $localeSet = false;
-                    $set = 'set' . $this->translateColumnName($column);
-                    switch ($column) {
-                        case 'local':
-                            $localizations[$countInserts]['localizations'] = $value;
-                            $localeSet = true;
-                            $countLocalizations++;
-                            break;
-                        default:
-                            $entity->$set($value);
-                            break;
-                    }
-                    if ($localeSet) {
-                        $localizations[$countInserts]['entity'] = $entity;
-                    }
-                }
-                $this->em->persist($entity);
-                $insertedItems[] = $entity;
+	/**
+	 * @param $collection
+	 *
+	 * @return \BiberLtd\Bundle\AddressManagementBundle\Services\ModelResponse|\BiberLtd\Bundle\CoreBundle\Responses\ModelResponse
+	 */
+	public function insertAddressTypes($collection)
+	{
+		$timeStamp = microtime(true);
+		if (!is_array($collection)) {
+			return $this->createException('InvalidParameterValueException', 'Invalid parameter value. Parameter must be an array collection', 'E:S:001');
+		}
+		$countInserts = 0;
+		$countLocalizations = 0;
+		$insertedItems = [];
+		$localizations = [];
+		$now = new \DateTime('now', new \DateTimeZone($this->kernel->getContainer()->getParameter('app_timezone')));
+		foreach ($collection as $data) {
+			if ($data instanceof BundleEntity\AddressType) {
+				$entity = $data;
+				$this->em->persist($entity);
+				$insertedItems[] = $entity;
+				$countInserts++;
+			} else if (is_object($data)) {
+				$entity = new BundleEntity\ProductCategory;
+				if (!property_exists($data, 'date_added')) {
+					$data->date_added = $now;
+				}
+				if (!property_exists($data, 'date_updated')) {
+					$data->date_updated = $now;
+				}
+				foreach ($data as $column => $value) {
+					$localeSet = false;
+					$set = 'set' . $this->translateColumnName($column);
+					switch ($column) {
+						case 'local':
+							$localizations[$countInserts]['localizations'] = $value;
+							$localeSet = true;
+							$countLocalizations++;
+							break;
+						default:
+							$entity->$set($value);
+							break;
+					}
+					if ($localeSet) {
+						$localizations[$countInserts]['entity'] = $entity;
+					}
+				}
+				$this->em->persist($entity);
+				$insertedItems[] = $entity;
 
-                $countInserts++;
-            }
-        }
-        /** Now handle localizations */
-        if ($countInserts > 0 && $countLocalizations > 0) {
-            $response = $this->insertAddressTypeLocalizations($localizations);
-        }
-        if ($countInserts > 0) {
-            $this->em->flush();
-            return new ModelResponse($insertedItems, $countInserts, 0, null, false, 'S:D:003', 'Selected entries have been successfully inserted into database.', $timeStamp, microtime(true));
-        }
-        return new ModelResponse(null, 0, 0, null, true, 'E:D:003', 'One or more entities cannot be inserted into database.', $timeStamp, microtime(true));
-    }
+				$countInserts++;
+			}
+		}
+		/** Now handle localizations */
+		if ($countInserts > 0 && $countLocalizations > 0) {
+			$response = $this->insertAddressTypeLocalizations($localizations);
+		}
+		if ($countInserts > 0) {
+			$this->em->flush();
+			return new ModelResponse($insertedItems, $countInserts, 0, null, false, 'S:D:003', 'Selected entries have been successfully inserted into database.', $timeStamp, microtime(true));
+		}
+		return new ModelResponse(null, 0, 0, null, true, 'E:D:003', 'One or more entities cannot be inserted into database.', $timeStamp, microtime(true));
+	}
 
 	/**
 	 * @param $address
 	 *
 	 * @return array
 	 */
-    public function insertAddress($address) {
-        return $this->insertAddresses(array($address));
-    }
+	public function insertAddress($address) {
+		return $this->insertAddresses(array($address));
+	}
 
 	/**
 	 * @param $collection
@@ -445,7 +445,7 @@ class AddressManagementModel extends CoreModel {
 		$q = $this->addLimit($q, $limit);
 
 		$result = $q->getResult();
-		
+
 		$totalRows = count($result);
 		if ($totalRows < 1) {
 			return new ModelResponse(null, 0, 0, null, true, 'E:D:002', 'No entries found in database that matches to your criterion.', $timeStamp, microtime(true));
@@ -633,9 +633,9 @@ class AddressManagementModel extends CoreModel {
 	 *
 	 * @return mixed
 	 */
-    public function updateAddressType($type) {
-        return $this->updateAddressTypes(array($type));
-    }
+	public function updateAddressType($type) {
+		return $this->updateAddressTypes(array($type));
+	}
 
 	/**
 	 * @param array $collection
@@ -999,15 +999,23 @@ class AddressManagementModel extends CoreModel {
 	/**
 	 * @param array $collection
 	 * @param $address
+	 * @param null $type
+	 * @param string|null $alias
 	 * @return \BiberLtd\Bundle\AddressManagementBundle\Services\ModelResponse|ModelResponse
 	 */
-	public function addMembersToAddress(array $collection, $address)
+	public function addMembersToAddress(array $collection, $address, $type = null, string $alias = null)
 	{
 		$timeStamp = microtime(true);
 		$membersToAdd = [];
 		$response = $this->getAddress($address);
 		if ($response->error->exist) {
 			return $response;
+		}
+		if(!is_null($type)){
+			$response = $this->getAddressType($type);
+			if(!$response->error->exist){
+				$type = $response->result->set;
+			}
 		}
 		$address = $response->result->set;
 		$mModel = $this->kernel->getContainer()->get('membermanagement.model');
@@ -1031,7 +1039,8 @@ class AddressManagementModel extends CoreModel {
 			/** Check if association exists */
 			if (!$this->isAddressAssociatedWithMember($address, $item, true)) {
 				$aom = new BundleEntity\AddressesOfMember();
-				$aom->setAddress($address)->setMember($item)->set($now);
+				$aom->setAddress($address)->setMember($item)->setDateAdded($now)->setDateUpdated($now);
+				$aom->setAddressType($type)->setAlias($alias);
 				$this->em->persist($aom);
 				$aomCollection[] = $aom;
 				$count++;
