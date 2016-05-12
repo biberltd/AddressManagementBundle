@@ -62,12 +62,6 @@ class Address extends CoreEntity
      */
     public $date_removed;
 
-    /**
-     * @ORM\OneToMany(targetEntity="PhoneNumbersOfAddresses", mappedBy="address")
-     * @var array
-     */
-    private $phoneNumbersOfAddresses;
-
     /** 
      * @ORM\Column(type="datetime", nullable=false)
      * @var \DateTime

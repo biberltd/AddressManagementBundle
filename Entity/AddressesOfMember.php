@@ -75,7 +75,7 @@ class AddressesOfMember extends CoreEntity
 
     /**
      * @ORM\ManyToOne(targetEntity="AddressType")
-     * @ORM\JoinColumn(name="type", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="type", referencedColumnName="id", nullable=true)
      * @var \BiberLtd\Bundle\AddressManagementBundle\Entity\AddressType
      */
     private $address_type;

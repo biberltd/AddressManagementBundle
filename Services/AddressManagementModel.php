@@ -995,4 +995,52 @@ class AddressManagementModel extends CoreModel {
 		);
 		return $this->listAddresses($filter,$sortOrder,$limit);
 	}
+
+	/**
+	 * @param array $collection
+	 * @param $address
+	 * @return \BiberLtd\Bundle\AddressManagementBundle\Services\ModelResponse|ModelResponse
+	 */
+	public function addMembersToAddress(array $collection, $address)
+	{
+		$timeStamp = microtime(true);
+		$membersToAdd = [];
+		$response = $this->getAddress($address);
+		if ($response->error->exist) {
+			return $response;
+		}
+		$address = $response->result->set;
+		$mModel = $this->kernel->getContainer()->get('membermanagement.model');
+		foreach ($collection as $aMember) {
+			$response = $mModel->getMember($aMember);
+			if (!$response->error->exist) {
+				$membersToAdd[] = $response->result->set;
+			}
+		}
+		unset($collection);
+		/** issue an error only if there is no valid file entries */
+		if (count($membersToAdd) < 1) {
+			return $this->createException('InvalidParameterValueException', 'Invalid parameter value. $collection parameter must be an array collection', 'E:S:001');
+		}
+		unset($count);
+
+		$aomCollection = [];
+		$count = 0;
+		$now = new \DateTime('now', new \DateTimezone($this->kernel->getContainer()->getParameter('app_timezone')));
+		foreach ($membersToAdd as $item) {
+			/** Check if association exists */
+			if (!$this->isAddressAssociatedWithMember($address, $item, true)) {
+				$aom = new BundleEntity\AddressesOfMember();
+				$aom->setAddress($address)->setMember($item)->set($now);
+				$this->em->persist($aom);
+				$aomCollection[] = $aom;
+				$count++;
+			}
+		}
+		if ($count > 0) {
+			$this->em->flush();
+			return new ModelResponse($aomCollection, $count, 0, null, false, 'S:D:003', 'Selected entries have been successfully inserted into database.', $timeStamp, microtime(true));
+		}
+		return new ModelResponse(null, 0, 0, null, true, 'E:D:003', 'One or more entities cannot be inserted into database.', $timeStamp, microtime(true));
+	}
 }
