@@ -310,7 +310,7 @@ class Address extends CoreEntity
         if(!$this->setModified('district', $district)->isModified()){
             return $this;
         }
-        $this->country = $district;
+        $this->district = $district;
 
         return $this;
     }
