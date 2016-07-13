@@ -525,7 +525,7 @@ class AddressManagementModel extends CoreModel {
 	 */
 	public function updateAddress($address)
 	{
-		return $this->updateAddresss(array($address));
+		return $this->updateAddresses(array($address));
 	}
 
 	/**
@@ -533,7 +533,7 @@ class AddressManagementModel extends CoreModel {
 	 *
 	 * @return \BiberLtd\Bundle\AddressManagementBundle\Services\ModelResponse
 	 */
-	public function updateAddresss(array $collection)
+	public function updateAddresses(array $collection)
 	{
 		$timeStamp = microtime(true);
 		$countUpdates = 0;
